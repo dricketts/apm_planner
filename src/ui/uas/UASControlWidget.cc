@@ -29,6 +29,7 @@ This file is part of the PIXHAWK project
  *
  */
 
+#include "QsLog.h"
 #include <QString>
 #include <QTimer>
 #include <QLabel>
@@ -80,6 +81,8 @@ void UASControlWidget::setUAS(UASInterface* uas)
         //connect(ui.setHomeButton, SIGNAL(clicked()), uas, SLOT(setLocalOriginAtCurrentGPSPosition()));
         disconnect(uas, SIGNAL(modeChanged(int,QString,QString)), this, SLOT(updateMode(int,QString,QString)));
         disconnect(uas, SIGNAL(statusChanged(int)), this, SLOT(updateState(int)));
+        disconnect(uas, SIGNAL(shimStatusChanged(int)), this, SLOT(updateState(int)));
+        disconnect(ui.shimButton, SIGNAL(clicked()), oldUAS, SLOT(enableShim()));
     }
     if (uas == 0)
     {
@@ -95,6 +98,8 @@ void UASControlWidget::setUAS(UASInterface* uas)
     //connect(ui.setHomeButton, SIGNAL(clicked()), uas, SLOT(setLocalOriginAtCurrentGPSPosition()));
     connect(uas, SIGNAL(modeChanged(int,QString,QString)), this, SLOT(updateMode(int,QString,QString)));
     connect(uas, SIGNAL(statusChanged(int)), this, SLOT(updateState(int)));
+    connect(uas, SIGNAL(shimStatusChanged(bool)), this, SLOT(updateShimStatus(bool)));
+    connect(ui.shimButton, SIGNAL(clicked()), this, SLOT(toggleShim()));
 
     ui.controlStatusLabel->setText(tr("Connected to ") + uas->getUASName());
 
@@ -118,6 +123,15 @@ void UASControlWidget::updateStatemachine()
     {
         ui.controlButton->setText(tr("ARM SYSTEM"));
     }
+    if (m_shimOn)
+    {
+        ui.shimButton->setText(tr("DISABLE SHIM"));
+    }
+    else
+    {
+        ui.shimButton->setText(tr("ENABLE SHIM"));
+    }
+    
 }
 
 /**
@@ -147,6 +161,20 @@ void UASControlWidget::updateMode(int uas,QString mode,QString description)
     Q_UNUSED(uas);
     Q_UNUSED(mode);
     Q_UNUSED(description);
+}
+
+void UASControlWidget::updateShimStatus(bool enabled)
+{
+  m_shimOn = enabled;
+  if (m_shimOn)
+  {
+    ui.shimButton->setText(tr("DISABLE SHIM"));
+  }
+  else
+  {
+    ui.shimButton->setText(tr("ENABLE SHIM"));
+  }
+
 }
 
 void UASControlWidget::updateState(int state)
@@ -194,6 +222,26 @@ void UASControlWidget::transmitMode()
 
         ui.lastActionLabel->setText(QString("Sent new mode %1 to %2").arg(mode).arg(mav->getUASName()));
     }
+}
+
+void UASControlWidget::toggleShim()
+{
+     UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
+     if (mav)
+     {
+       if (m_shimOn)
+       {
+	 mav->disableShim();
+       } else {
+	 mav->enableShim();
+       }
+     }
+
+     // Update state now and in several intervals when MAV might have changed state
+     updateStatemachine();
+
+     QTimer::singleShot(50, this, SLOT(updateStatemachine()));
+     QTimer::singleShot(200, this, SLOT(updateStatemachine()));
 }
 
 void UASControlWidget::cycleContextButton()

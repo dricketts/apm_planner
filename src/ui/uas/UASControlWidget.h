@@ -63,8 +63,12 @@ public slots:
     void updateMode(int uas,QString mode,QString description);
     /** @brief Update state */
     void updateState(int state);
+    /** @brief Update status of shim */
+    void updateShimStatus(bool enabled);
     /** @brief Update internal state machine */
     void updateStatemachine();
+    /** @brief Toggle the status of the shim */
+    void toggleShim();
 
 signals:
     void changedMode(int);
@@ -78,6 +82,7 @@ protected:
     int m_uas;              ///< Reference to the current uas
     unsigned int m_uasMode; ///< Current uas mode
     bool m_engineOn;        ///< Engine state
+    bool m_shimOn;        ///< Shim state
 
 private:
     Ui::uasControl ui;

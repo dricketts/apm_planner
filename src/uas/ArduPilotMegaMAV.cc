@@ -388,15 +388,22 @@ void ArduPilotMegaMAV::createNewMAVLinkLog(uint8_t type)
 void ArduPilotMegaMAV::receiveMessage(LinkInterface* link, mavlink_message_t message)
 {
     // Let UAS handle the default message set
-    //qDebug() << "Message type:" << message.sysid << message.msgid;
+    // QLOG_DEBUG() << "Message type:" << message.sysid << message.msgid;
     UAS::receiveMessage(link, message);
 
     if (message.sysid == uasId) {
         // Handle your special messages
         switch (message.msgid) {
+	case MAVLINK_MSG_ID_SHIM_ENABLE_DISABLE:
+	{
+	  mavlink_shim_enable_disable_t status;
+	  mavlink_msg_shim_enable_disable_decode(&message, &status);
+	  emit shimStatusChanged(status.enable != 0.0);
+	  break;
+	}
+
         case MAVLINK_MSG_ID_HEARTBEAT:
         {
-            //QLOG_DEBUG() << "ARDUPILOT RECEIVED HEARTBEAT";
             break;
         }
         case MAVLINK_MSG_ID_STATUSTEXT:
@@ -441,6 +448,30 @@ void ArduPilotMegaMAV::setMountControl(double pa,double pb,double pc,bool islatl
     {
         mavlink_msg_mount_control_pack(255,1,&msg,this->uasId,1,pa,pb,pc,0);
     }
+    sendMessage(msg);
+}
+
+void ArduPilotMegaMAV::enableShim()
+{
+    mavlink_message_t msg;
+
+    mavlink_msg_shim_enable_disable_pack(getSystemId(),
+					 getComponentId(),
+					 &msg,
+					 1.0 // 1.0 for enable
+					 );
+    sendMessage(msg);
+}
+
+void ArduPilotMegaMAV::disableShim()
+{
+    mavlink_message_t msg;
+
+    mavlink_msg_shim_enable_disable_pack(getSystemId(),
+					 getComponentId(),
+					 &msg,
+					 0.0 // 0.0 for disable
+					 );
     sendMessage(msg);
 }
 

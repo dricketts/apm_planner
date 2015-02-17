@@ -880,6 +880,11 @@ public slots:
     void startLowBattAlarm();
     void stopLowBattAlarm();
 
+    /** @brief Enable the height shim */
+    virtual void enableShim();
+    /** @brief Disable the height shim */
+    virtual void disableShim();
+
     /** @brief Arm system */
     virtual void armSystem();
     /** @brief Disable the motors */

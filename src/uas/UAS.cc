@@ -363,7 +363,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
         emit componentCreated(uasId, message.compid, componentName);
     }
 
-    //    QLOG_DEBUG() << "UAS RECEIVED from" << message.sysid << "component" << message.compid << "msg id" << message.msgid << "seq no" << message.seq;
+    // QLOG_DEBUG() << "UAS RECEIVED from" << message.sysid << "component" << message.compid << "msg id" << message.msgid << "seq no" << message.seq;
 
     // Only accept messages from this system (condition 1)
     // and only then if a) attitudeStamped is disabled OR b) attitudeStamped is enabled
@@ -408,6 +408,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
 
         switch (message.msgid)
         {
+	  
         case MAVLINK_MSG_ID_HEARTBEAT:
         {
             if (multiComponentSourceDetected && wrongComponent)
@@ -2784,6 +2785,16 @@ void UAS::launch()
     mavlink_msg_command_long_pack(systemId, componentId, &msg, this->getUASID(), 0, MAV_CMD_NAV_TAKEOFF, 1, 0, 0, 0, 0, 0, 0, 0);
     sendMessage(msg);
 }
+
+/**
+ * This does nothing. Subclasses should override to actually enable the shim.
+ */
+void UAS::enableShim() {}
+
+/**
+ * This does nothing. Subclasses should override to actually enable the shim.
+ */
+void UAS::disableShim() {}
 
 /**
  * @warning Depending on the UAS, this might make the rotors of a helicopter spinning

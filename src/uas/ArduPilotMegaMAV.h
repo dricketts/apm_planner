@@ -166,6 +166,10 @@ public slots:
     void RequestAllDataStreams();
 
     // Overides from UAS virtual interface
+    virtual void enableShim();
+    virtual void disableShim();
+
+    // Overides from UAS virtual interface
     virtual void armSystem();
     virtual void disarmSystem();
 

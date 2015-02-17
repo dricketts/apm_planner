@@ -239,6 +239,25 @@
      </property>
     </spacer>
    </item>
+   <item row="7" column="1" colspan="3">
+    <widget class="QPushButton" name="shimButton">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Main shim button</string>
+     </property>
+     <property name="statusTip">
+      <string>Main shim button</string>
+     </property>
+     <property name="text">
+      <string>Activate Shim</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="1" colspan="3">
     <widget class="QPushButton" name="controlButton">
      <property name="minimumSize">
@@ -258,7 +277,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1" colspan="3">
+   <item row="8" column="1" colspan="3">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

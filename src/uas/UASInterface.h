@@ -446,6 +446,8 @@ protected:
     QColor color;
 
 signals:
+    /** @brief the shim status has changed */
+    void shimStatusChanged(bool enabled);
     /** @brief The robot state has changed */
     void statusChanged(int stateFlag);
     /** @brief A new component was detected or created */
