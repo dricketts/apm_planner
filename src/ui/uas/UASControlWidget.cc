@@ -263,13 +263,13 @@ void UASControlWidget::updateShimParams()
 			  ui.aminIn->value(),
 			  ui.pwm_scaleIn->value(),
 			  ui.hover_throttleIn->value(),
-			  ui.window_timeIn->value());
+			  ui.smooth_lookaheadIn->value());
 
      }
 }
 
 // void UASControlWidget::displayShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-// 					 float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time)
+// 					 float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead)
 // {
 //   QLOG_DEBUG() << "About to display";
 //   ui.statusOut->setText((m_shimOn ? "enabled " : "disabled ") +
@@ -280,7 +280,7 @@ void UASControlWidget::updateShimParams()
 //   ui.aminOut->display(amin);
 //   ui.pwm_scaleOut->display(pwm_accel_scale);
 //   ui.hover_throttleOut->display(hover_throttle);
-//   ui.window_timeOut->display((int) window_time);
+//   ui.smooth_lookaheadOut->display((int) smooth_lookahead);
 // }
 
 void UASControlWidget::cycleContextButton()

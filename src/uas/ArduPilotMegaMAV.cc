@@ -412,7 +412,7 @@ void ArduPilotMegaMAV::receiveMessage(LinkInterface* link, mavlink_message_t mes
 // 				   params.amin,
 // 				   params.pwm_accel_scale,
 // 				   params.hover_throttle,
-// 				   params.window_time);
+// 				   params.smooth_lookahead);
 
 	  break;
 	}
@@ -491,7 +491,7 @@ void ArduPilotMegaMAV::disableShim()
 }
 
 void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-			float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time)
+				     float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead)
 {
     mavlink_message_t msg;
 
@@ -505,7 +505,7 @@ void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified,
 				 amin,
 				 pwm_accel_scale,
 				 hover_throttle,
-				 window_time
+				 smooth_lookahead
 					 );
     sendMessage(msg);
 }
