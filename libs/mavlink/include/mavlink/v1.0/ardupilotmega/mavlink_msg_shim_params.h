@@ -8,17 +8,17 @@ typedef struct __mavlink_shim_params_t
  float ubunverified; ///< the height upper bound in cm of the unverified smoothing shim
  float amin; ///< The acceleration in cm/s/s issued when the verified shim is engaged. Should be at least the acceleration due to gravity.
  float pwm_accel_scale; ///< The ratio between the signal sent to a motor and the acceleration in cm/s/s produced by that motor
- uint32_t window_time; ///< The shim sends various values to the GCS that are computed over the last n time. For example, the percent of time the safety mode of the shim was engaged. This field gives the amount of time in milliseconds over which these values are computed.
  uint16_t hover_throttle; ///< The throttle provided to the motor mixing code required for hover
+ uint16_t smooth_lookahead; ///< The number of iterations in the future that the smoothing shim looks.
  uint8_t before; ///< 1 to run the shim before the motor mixing code, 0 for after
  uint8_t smooth; ///< 1 to run the unverified smoothing shim, 0 to not run the unverified smoothing shim
 } mavlink_shim_params_t;
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 24
-#define MAVLINK_MSG_ID_231_LEN 24
+#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 22
+#define MAVLINK_MSG_ID_231_LEN 22
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 81
-#define MAVLINK_MSG_ID_231_CRC 81
+#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 10
+#define MAVLINK_MSG_ID_231_CRC 10
 
 
 
@@ -29,10 +29,10 @@ typedef struct __mavlink_shim_params_t
          { "ubunverified", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_shim_params_t, ubunverified) }, \
          { "amin", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_shim_params_t, amin) }, \
          { "pwm_accel_scale", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_shim_params_t, pwm_accel_scale) }, \
-         { "window_time", NULL, MAVLINK_TYPE_UINT32_T, 0, 16, offsetof(mavlink_shim_params_t, window_time) }, \
-         { "hover_throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 20, offsetof(mavlink_shim_params_t, hover_throttle) }, \
-         { "before", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_shim_params_t, before) }, \
-         { "smooth", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_shim_params_t, smooth) }, \
+         { "hover_throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 16, offsetof(mavlink_shim_params_t, hover_throttle) }, \
+         { "smooth_lookahead", NULL, MAVLINK_TYPE_UINT16_T, 0, 18, offsetof(mavlink_shim_params_t, smooth_lookahead) }, \
+         { "before", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_shim_params_t, before) }, \
+         { "smooth", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_shim_params_t, smooth) }, \
          } \
 }
 
@@ -50,11 +50,11 @@ typedef struct __mavlink_shim_params_t
  * @param amin The acceleration in cm/s/s issued when the verified shim is engaged. Should be at least the acceleration due to gravity.
  * @param pwm_accel_scale The ratio between the signal sent to a motor and the acceleration in cm/s/s produced by that motor
  * @param hover_throttle The throttle provided to the motor mixing code required for hover
- * @param window_time The shim sends various values to the GCS that are computed over the last n time. For example, the percent of time the safety mode of the shim was engaged. This field gives the amount of time in milliseconds over which these values are computed.
+ * @param smooth_lookahead The number of iterations in the future that the smoothing shim looks.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint32_t window_time)
+						       uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint16_t smooth_lookahead)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -62,10 +62,10 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
 	_mav_put_float(buf, 4, ubunverified);
 	_mav_put_float(buf, 8, amin);
 	_mav_put_float(buf, 12, pwm_accel_scale);
-	_mav_put_uint32_t(buf, 16, window_time);
-	_mav_put_uint16_t(buf, 20, hover_throttle);
-	_mav_put_uint8_t(buf, 22, before);
-	_mav_put_uint8_t(buf, 23, smooth);
+	_mav_put_uint16_t(buf, 16, hover_throttle);
+	_mav_put_uint16_t(buf, 18, smooth_lookahead);
+	_mav_put_uint8_t(buf, 20, before);
+	_mav_put_uint8_t(buf, 21, smooth);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
@@ -74,8 +74,8 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
 	packet.ubunverified = ubunverified;
 	packet.amin = amin;
 	packet.pwm_accel_scale = pwm_accel_scale;
-	packet.window_time = window_time;
 	packet.hover_throttle = hover_throttle;
+	packet.smooth_lookahead = smooth_lookahead;
 	packet.before = before;
 	packet.smooth = smooth;
 
@@ -103,12 +103,12 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
  * @param amin The acceleration in cm/s/s issued when the verified shim is engaged. Should be at least the acceleration due to gravity.
  * @param pwm_accel_scale The ratio between the signal sent to a motor and the acceleration in cm/s/s produced by that motor
  * @param hover_throttle The throttle provided to the motor mixing code required for hover
- * @param window_time The shim sends various values to the GCS that are computed over the last n time. For example, the percent of time the safety mode of the shim was engaged. This field gives the amount of time in milliseconds over which these values are computed.
+ * @param smooth_lookahead The number of iterations in the future that the smoothing shim looks.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t before,uint8_t smooth,float ubverified,float ubunverified,float amin,float pwm_accel_scale,uint16_t hover_throttle,uint32_t window_time)
+						           uint8_t before,uint8_t smooth,float ubverified,float ubunverified,float amin,float pwm_accel_scale,uint16_t hover_throttle,uint16_t smooth_lookahead)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -116,10 +116,10 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
 	_mav_put_float(buf, 4, ubunverified);
 	_mav_put_float(buf, 8, amin);
 	_mav_put_float(buf, 12, pwm_accel_scale);
-	_mav_put_uint32_t(buf, 16, window_time);
-	_mav_put_uint16_t(buf, 20, hover_throttle);
-	_mav_put_uint8_t(buf, 22, before);
-	_mav_put_uint8_t(buf, 23, smooth);
+	_mav_put_uint16_t(buf, 16, hover_throttle);
+	_mav_put_uint16_t(buf, 18, smooth_lookahead);
+	_mav_put_uint8_t(buf, 20, before);
+	_mav_put_uint8_t(buf, 21, smooth);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
@@ -128,8 +128,8 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
 	packet.ubunverified = ubunverified;
 	packet.amin = amin;
 	packet.pwm_accel_scale = pwm_accel_scale;
-	packet.window_time = window_time;
 	packet.hover_throttle = hover_throttle;
+	packet.smooth_lookahead = smooth_lookahead;
 	packet.before = before;
 	packet.smooth = smooth;
 
@@ -154,7 +154,7 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
  */
 static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->before, shim_params->smooth, shim_params->ubverified, shim_params->ubunverified, shim_params->amin, shim_params->pwm_accel_scale, shim_params->hover_throttle, shim_params->window_time);
+	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->before, shim_params->smooth, shim_params->ubverified, shim_params->ubunverified, shim_params->amin, shim_params->pwm_accel_scale, shim_params->hover_throttle, shim_params->smooth_lookahead);
 }
 
 /**
@@ -168,7 +168,7 @@ static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->before, shim_params->smooth, shim_params->ubverified, shim_params->ubunverified, shim_params->amin, shim_params->pwm_accel_scale, shim_params->hover_throttle, shim_params->window_time);
+	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->before, shim_params->smooth, shim_params->ubverified, shim_params->ubunverified, shim_params->amin, shim_params->pwm_accel_scale, shim_params->hover_throttle, shim_params->smooth_lookahead);
 }
 
 /**
@@ -182,11 +182,11 @@ static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, ui
  * @param amin The acceleration in cm/s/s issued when the verified shim is engaged. Should be at least the acceleration due to gravity.
  * @param pwm_accel_scale The ratio between the signal sent to a motor and the acceleration in cm/s/s produced by that motor
  * @param hover_throttle The throttle provided to the motor mixing code required for hover
- * @param window_time The shim sends various values to the GCS that are computed over the last n time. For example, the percent of time the safety mode of the shim was engaged. This field gives the amount of time in milliseconds over which these values are computed.
+ * @param smooth_lookahead The number of iterations in the future that the smoothing shim looks.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint32_t window_time)
+static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint16_t smooth_lookahead)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -194,10 +194,10 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t 
 	_mav_put_float(buf, 4, ubunverified);
 	_mav_put_float(buf, 8, amin);
 	_mav_put_float(buf, 12, pwm_accel_scale);
-	_mav_put_uint32_t(buf, 16, window_time);
-	_mav_put_uint16_t(buf, 20, hover_throttle);
-	_mav_put_uint8_t(buf, 22, before);
-	_mav_put_uint8_t(buf, 23, smooth);
+	_mav_put_uint16_t(buf, 16, hover_throttle);
+	_mav_put_uint16_t(buf, 18, smooth_lookahead);
+	_mav_put_uint8_t(buf, 20, before);
+	_mav_put_uint8_t(buf, 21, smooth);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -210,8 +210,8 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t 
 	packet.ubunverified = ubunverified;
 	packet.amin = amin;
 	packet.pwm_accel_scale = pwm_accel_scale;
-	packet.window_time = window_time;
 	packet.hover_throttle = hover_throttle;
+	packet.smooth_lookahead = smooth_lookahead;
 	packet.before = before;
 	packet.smooth = smooth;
 
@@ -231,7 +231,7 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint32_t window_time)
+static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t before, uint8_t smooth, float ubverified, float ubunverified, float amin, float pwm_accel_scale, uint16_t hover_throttle, uint16_t smooth_lookahead)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -239,10 +239,10 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 	_mav_put_float(buf, 4, ubunverified);
 	_mav_put_float(buf, 8, amin);
 	_mav_put_float(buf, 12, pwm_accel_scale);
-	_mav_put_uint32_t(buf, 16, window_time);
-	_mav_put_uint16_t(buf, 20, hover_throttle);
-	_mav_put_uint8_t(buf, 22, before);
-	_mav_put_uint8_t(buf, 23, smooth);
+	_mav_put_uint16_t(buf, 16, hover_throttle);
+	_mav_put_uint16_t(buf, 18, smooth_lookahead);
+	_mav_put_uint8_t(buf, 20, before);
+	_mav_put_uint8_t(buf, 21, smooth);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -255,8 +255,8 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 	packet->ubunverified = ubunverified;
 	packet->amin = amin;
 	packet->pwm_accel_scale = pwm_accel_scale;
-	packet->window_time = window_time;
 	packet->hover_throttle = hover_throttle;
+	packet->smooth_lookahead = smooth_lookahead;
 	packet->before = before;
 	packet->smooth = smooth;
 
@@ -281,7 +281,7 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
  */
 static inline uint8_t mavlink_msg_shim_params_get_before(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  22);
+	return _MAV_RETURN_uint8_t(msg,  20);
 }
 
 /**
@@ -291,7 +291,7 @@ static inline uint8_t mavlink_msg_shim_params_get_before(const mavlink_message_t
  */
 static inline uint8_t mavlink_msg_shim_params_get_smooth(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  23);
+	return _MAV_RETURN_uint8_t(msg,  21);
 }
 
 /**
@@ -341,17 +341,17 @@ static inline float mavlink_msg_shim_params_get_pwm_accel_scale(const mavlink_me
  */
 static inline uint16_t mavlink_msg_shim_params_get_hover_throttle(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint16_t(msg,  20);
+	return _MAV_RETURN_uint16_t(msg,  16);
 }
 
 /**
- * @brief Get field window_time from shim_params message
+ * @brief Get field smooth_lookahead from shim_params message
  *
- * @return The shim sends various values to the GCS that are computed over the last n time. For example, the percent of time the safety mode of the shim was engaged. This field gives the amount of time in milliseconds over which these values are computed.
+ * @return The number of iterations in the future that the smoothing shim looks.
  */
-static inline uint32_t mavlink_msg_shim_params_get_window_time(const mavlink_message_t* msg)
+static inline uint16_t mavlink_msg_shim_params_get_smooth_lookahead(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint32_t(msg,  16);
+	return _MAV_RETURN_uint16_t(msg,  18);
 }
 
 /**
@@ -367,8 +367,8 @@ static inline void mavlink_msg_shim_params_decode(const mavlink_message_t* msg, 
 	shim_params->ubunverified = mavlink_msg_shim_params_get_ubunverified(msg);
 	shim_params->amin = mavlink_msg_shim_params_get_amin(msg);
 	shim_params->pwm_accel_scale = mavlink_msg_shim_params_get_pwm_accel_scale(msg);
-	shim_params->window_time = mavlink_msg_shim_params_get_window_time(msg);
 	shim_params->hover_throttle = mavlink_msg_shim_params_get_hover_throttle(msg);
+	shim_params->smooth_lookahead = mavlink_msg_shim_params_get_smooth_lookahead(msg);
 	shim_params->before = mavlink_msg_shim_params_get_before(msg);
 	shim_params->smooth = mavlink_msg_shim_params_get_smooth(msg);
 #else
