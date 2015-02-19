@@ -2797,6 +2797,17 @@ void UAS::enableShim() {}
 void UAS::disableShim() {}
 
 /**
+ * This does nothing. Subclasses should override to actually enable the shim.
+ */
+void UAS::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
+			float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time) {}
+
+/**
+ * This does nothing. Subclasses should override to actually enable the shim.
+ */
+void UAS::setWindowTime(float time) {}
+
+/**
  * @warning Depending on the UAS, this might make the rotors of a helicopter spinning
  *
  */

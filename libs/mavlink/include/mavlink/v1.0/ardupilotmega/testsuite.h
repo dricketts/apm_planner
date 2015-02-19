@@ -1565,7 +1565,7 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_shim_params_t packet_in = {
-		17.0,45.0,73.0,101.0,129.0,963498504,77,144
+		17.0,45.0,73.0,101.0,963498296,18275,199,10
     };
 	mavlink_shim_params_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -1573,8 +1573,8 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         	packet1.ubunverified = packet_in.ubunverified;
         	packet1.amin = packet_in.amin;
         	packet1.pwm_accel_scale = packet_in.pwm_accel_scale;
-        	packet1.throttle_accel_scale = packet_in.throttle_accel_scale;
         	packet1.window_time = packet_in.window_time;
+        	packet1.hover_throttle = packet_in.hover_throttle;
         	packet1.before = packet_in.before;
         	packet1.smooth = packet_in.smooth;
         
@@ -1586,12 +1586,12 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.throttle_accel_scale , packet1.window_time );
+	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.window_time );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.throttle_accel_scale , packet1.window_time );
+	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.window_time );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1604,7 +1604,7 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.throttle_accel_scale , packet1.window_time );
+	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.window_time );
 	mavlink_msg_shim_params_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }

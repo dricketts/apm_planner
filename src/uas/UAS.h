@@ -884,6 +884,11 @@ public slots:
     virtual void enableShim();
     /** @brief Disable the height shim */
     virtual void disableShim();
+    /** @brief Set height shim parameters */
+    virtual void setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
+			       float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time);
+    /** @brief Set time over which throttle and pwm measurements are averaged */
+    virtual void setWindowTime(float time);
 
     /** @brief Arm system */
     virtual void armSystem();

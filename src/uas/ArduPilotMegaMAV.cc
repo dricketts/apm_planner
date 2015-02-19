@@ -398,7 +398,22 @@ void ArduPilotMegaMAV::receiveMessage(LinkInterface* link, mavlink_message_t mes
 	{
 	  mavlink_shim_enable_disable_t status;
 	  mavlink_msg_shim_enable_disable_decode(&message, &status);
-	  emit shimStatusChanged(status.enable != 0.0);
+	  emit shimStatusChanged(status.enable != 0);
+	  break;
+	}
+	case MAVLINK_MSG_ID_SHIM_PARAMS:
+	{
+// 	  mavlink_shim_params_t params;
+// 	  mavlink_msg_shim_params_decode(&message, &params);
+// 	  emit broadcastShimParams(params.before != 0,
+// 				   params.smooth != 0,
+// 				   params.ubverified,
+// 				   params.ubunverified,
+// 				   params.amin,
+// 				   params.pwm_accel_scale,
+// 				   params.hover_throttle,
+// 				   params.window_time);
+
 	  break;
 	}
 
@@ -472,6 +487,40 @@ void ArduPilotMegaMAV::disableShim()
 					 &msg,
 					 0.0 // 0.0 for disable
 					 );
+    sendMessage(msg);
+}
+
+void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
+			float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time)
+{
+    mavlink_message_t msg;
+
+    mavlink_msg_shim_params_pack(getSystemId(),
+					 getComponentId(),
+					 &msg,
+				 before ? 1 : 0,
+				 smooth ? 1 : 0,
+				 ubverified,
+				 ubunverified,
+				 amin,
+				 pwm_accel_scale,
+				 hover_throttle,
+				 window_time
+					 );
+    sendMessage(msg);
+}
+
+void ArduPilotMegaMAV::setWindowTime(float time)
+{
+    mavlink_message_t msg;
+
+    mavlink_msg_throttle_pwm_stats_pack(getSystemId(),
+					getComponentId(),
+					&msg,
+					time,
+					0,
+					0
+					);
     sendMessage(msg);
 }
 

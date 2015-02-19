@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>228</height>
+    <width>267</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -34,22 +34,98 @@
   <property name="toolTip">
    <string>Control widget to send basic control actions to the micro air vehicle</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="5,1,40,1,40,40,40,1000" columnstretch="5,20,20,25,5">
-   <property name="margin">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0">
+   <property name="leftMargin">
     <number>4</number>
    </property>
-   <item row="0" column="0" rowspan="7">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <item row="10" column="2" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Bound smoothing (cm)</string>
      </property>
-     <property name="sizeHint" stdset="0">
+    </widget>
+   </item>
+   <item row="11" column="2" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Breaking accel (cm/s/s)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QSpinBox" name="bound_verIn">
+     <property name="maximum">
+      <number>5000</number>
+     </property>
+     <property name="singleStep">
+      <number>50</number>
+     </property>
+     <property name="value">
+      <number>1000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="pwm_scaleIn">
+     <property name="decimals">
+      <number>4</number>
+     </property>
+     <property name="maximum">
+      <double>10000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>544.813899999999990</double>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="2" colspan="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Hover Throttle (0-1000)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1" colspan="3">
+    <widget class="QPushButton" name="paramSetButton">
+     <property name="text">
+      <string>Set Params</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="QSpinBox" name="window_timeIn">
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>2</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QComboBox" name="modeComboBox">
+     <property name="minimumSize">
       <size>
-       <width>31</width>
-       <height>159</height>
+       <width>25</width>
+       <height>16</height>
       </size>
      </property>
-    </spacer>
+     <property name="toolTip">
+      <string>Select MAV operation mode</string>
+     </property>
+     <property name="statusTip">
+      <string>Select MAV operation mode</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="1" rowspan="2" colspan="3">
     <widget class="QLabel" name="controlStatusLabel">
@@ -76,15 +152,60 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="3">
-    <spacer name="verticalSpacer">
+   <item row="5" column="3">
+    <widget class="QPushButton" name="setModeButton">
+     <property name="minimumSize">
+      <size>
+       <width>25</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Transmit and enable mode on MAV</string>
+     </property>
+     <property name="statusTip">
+      <string>Transmit and enable mode on MAV</string>
+     </property>
+     <property name="text">
+      <string>Set</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../qgroundcontrol.qrc">
+       <normaloff>:/files/images/devices/network-wireless.svg</normaloff>:/files/images/devices/network-wireless.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="3">
+    <widget class="QLabel" name="lastActionLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>10</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Status label</string>
+     </property>
+     <property name="statusTip">
+      <string>Status label</string>
+     </property>
+     <property name="text">
+      <string>No actions executed so far</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4" rowspan="6">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>216</width>
-       <height>17</height>
+       <width>30</width>
+       <height>159</height>
       </size>
      </property>
     </spacer>
@@ -165,98 +286,38 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="1" colspan="2">
-    <widget class="QComboBox" name="modeComboBox">
-     <property name="minimumSize">
-      <size>
-       <width>25</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Select MAV operation mode</string>
-     </property>
-     <property name="statusTip">
-      <string>Select MAV operation mode</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QPushButton" name="setModeButton">
-     <property name="minimumSize">
-      <size>
-       <width>25</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Transmit and enable mode on MAV</string>
-     </property>
-     <property name="statusTip">
-      <string>Transmit and enable mode on MAV</string>
-     </property>
+   <item row="12" column="3">
+    <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Set</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../qgroundcontrol.qrc">
-       <normaloff>:/files/images/devices/network-wireless.svg</normaloff>:/files/images/devices/network-wireless.svg</iconset>
+      <string>PWM accel scale</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1" colspan="3">
-    <widget class="QLabel" name="lastActionLabel">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>10</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Status label</string>
-     </property>
-     <property name="statusTip">
-      <string>Status label</string>
-     </property>
-     <property name="text">
-      <string>No actions executed so far</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4" rowspan="6">
-    <spacer name="horizontalSpacer_2">
+   <item row="3" column="1" colspan="3">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>30</width>
-       <height>159</height>
+       <width>216</width>
+       <height>17</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="7" column="1" colspan="3">
-    <widget class="QPushButton" name="shimButton">
-     <property name="minimumSize">
+   <item row="15" column="1" colspan="3">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>0</width>
-       <height>30</height>
+       <width>20</width>
+       <height>5</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>Main shim button</string>
-     </property>
-     <property name="statusTip">
-      <string>Main shim button</string>
-     </property>
-     <property name="text">
-      <string>Activate Shim</string>
-     </property>
-    </widget>
+    </spacer>
    </item>
    <item row="2" column="1" colspan="3">
     <widget class="QPushButton" name="controlButton">
@@ -277,18 +338,91 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1" colspan="3">
-    <spacer name="verticalSpacer_2">
+   <item row="13" column="1">
+    <widget class="QSpinBox" name="hover_throttleIn">
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>450</number>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QCheckBox" name="smoothIn">
+     <property name="text">
+      <string>Smooth</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1" colspan="2">
+    <widget class="QCheckBox" name="beforeIn">
+     <property name="text">
+      <string>Before Mixing</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="2" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Bound verified (cm)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="QSpinBox" name="aminIn">
+     <property name="minimum">
+      <number>-980</number>
+     </property>
+     <property name="maximum">
+      <number>0</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>-500</number>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QSpinBox" name="bound_unverIn">
+     <property name="maximum">
+      <number>5000</number>
+     </property>
+     <property name="singleStep">
+      <number>50</number>
+     </property>
+     <property name="value">
+      <number>1000</number>
+     </property>
+     <property name="displayIntegerBase">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="7">
+    <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>5</height>
+       <width>31</width>
+       <height>159</height>
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="14" column="2" colspan="2">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Time Window (s)</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

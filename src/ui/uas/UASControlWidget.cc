@@ -82,7 +82,10 @@ void UASControlWidget::setUAS(UASInterface* uas)
         disconnect(uas, SIGNAL(modeChanged(int,QString,QString)), this, SLOT(updateMode(int,QString,QString)));
         disconnect(uas, SIGNAL(statusChanged(int)), this, SLOT(updateState(int)));
         disconnect(uas, SIGNAL(shimStatusChanged(int)), this, SLOT(updateState(int)));
-        disconnect(ui.shimButton, SIGNAL(clicked()), oldUAS, SLOT(enableShim()));
+	//        disconnect(uas, SIGNAL(broadcastShimParams(bool, bool, float, float, float, float float, uint32_t)),
+	//   this, SLOT(displayShimParams(bool, bool, float, float, float, float, float, uint32_t)));
+	//        disconnect(ui.shimButton, SIGNAL(clicked()), oldUAS, SLOT(enableShim()));
+        disconnect(ui.paramSetButton, SIGNAL(clicked()), oldUAS, SLOT(updateShimParams()));
     }
     if (uas == 0)
     {
@@ -99,7 +102,11 @@ void UASControlWidget::setUAS(UASInterface* uas)
     connect(uas, SIGNAL(modeChanged(int,QString,QString)), this, SLOT(updateMode(int,QString,QString)));
     connect(uas, SIGNAL(statusChanged(int)), this, SLOT(updateState(int)));
     connect(uas, SIGNAL(shimStatusChanged(bool)), this, SLOT(updateShimStatus(bool)));
-    connect(ui.shimButton, SIGNAL(clicked()), this, SLOT(toggleShim()));
+    //    connect(uas, SIGNAL(broadcastShimParams(bool, bool, float, float, float, float float, uint32_t)),
+    //    this, SLOT(displayShimParams(bool, bool, float, float, float, float, float, uint32_t)));
+
+    //    connect(ui.shimButton, SIGNAL(clicked()), this, SLOT(toggleShim()));
+    connect(ui.paramSetButton, SIGNAL(clicked()), this, SLOT(updateShimParams()));
 
     ui.controlStatusLabel->setText(tr("Connected to ") + uas->getUASName());
 
@@ -123,14 +130,14 @@ void UASControlWidget::updateStatemachine()
     {
         ui.controlButton->setText(tr("ARM SYSTEM"));
     }
-    if (m_shimOn)
-    {
-        ui.shimButton->setText(tr("DISABLE SHIM"));
-    }
-    else
-    {
-        ui.shimButton->setText(tr("ENABLE SHIM"));
-    }
+//     if (m_shimOn)
+//     {
+//         ui.shimButton->setText(tr("DISABLE SHIM"));
+//     }
+//     else
+//     {
+//         ui.shimButton->setText(tr("ENABLE SHIM"));
+//     }
     
 }
 
@@ -166,14 +173,14 @@ void UASControlWidget::updateMode(int uas,QString mode,QString description)
 void UASControlWidget::updateShimStatus(bool enabled)
 {
   m_shimOn = enabled;
-  if (m_shimOn)
-  {
-    ui.shimButton->setText(tr("DISABLE SHIM"));
-  }
-  else
-  {
-    ui.shimButton->setText(tr("ENABLE SHIM"));
-  }
+//   if (m_shimOn)
+//   {
+//     ui.shimButton->setText(tr("DISABLE SHIM"));
+//   }
+//   else
+//   {
+//     ui.shimButton->setText(tr("ENABLE SHIM"));
+//   }
 
 }
 
@@ -224,25 +231,57 @@ void UASControlWidget::transmitMode()
     }
 }
 
-void UASControlWidget::toggleShim()
+// void UASControlWidget::toggleShim()
+// {
+//      UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
+//      if (mav)
+//      {
+//        if (m_shimOn)
+//        {
+// 	 mav->disableShim();
+//        } else {
+// 	 mav->enableShim();
+//        }
+//      }
+
+//      // Update state now and in several intervals when MAV might have changed state
+//      updateStatemachine();
+
+//      QTimer::singleShot(50, this, SLOT(updateStatemachine()));
+//      QTimer::singleShot(200, this, SLOT(updateStatemachine()));
+// }
+
+void UASControlWidget::updateShimParams()
 {
      UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
      if (mav)
      {
-       if (m_shimOn)
-       {
-	 mav->disableShim();
-       } else {
-	 mav->enableShim();
-       }
+       mav->setShimParams(ui.beforeIn->isChecked(),
+			  ui.smoothIn->isChecked(),
+			  ui.bound_verIn->value(),
+			  ui.bound_unverIn->value(),
+			  ui.aminIn->value(),
+			  ui.pwm_scaleIn->value(),
+			  ui.hover_throttleIn->value(),
+			  ui.window_timeIn->value());
+
      }
-
-     // Update state now and in several intervals when MAV might have changed state
-     updateStatemachine();
-
-     QTimer::singleShot(50, this, SLOT(updateStatemachine()));
-     QTimer::singleShot(200, this, SLOT(updateStatemachine()));
 }
+
+// void UASControlWidget::displayShimParams(bool before, bool smooth, float ubverified, float ubunverified,
+// 					 float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time)
+// {
+//   QLOG_DEBUG() << "About to display";
+//   ui.statusOut->setText((m_shimOn ? "enabled " : "disabled ") +
+// 			(before ? "before " : "after ") +
+// 			(smooth ? "smooth" : "not smooth"));
+//   ui.bound_verOut->display(ubverified);
+//   ui.bound_unverOut->display(ubunverified);
+//   ui.aminOut->display(amin);
+//   ui.pwm_scaleOut->display(pwm_accel_scale);
+//   ui.hover_throttleOut->display(hover_throttle);
+//   ui.window_timeOut->display((int) window_time);
+// }
 
 void UASControlWidget::cycleContextButton()
 {
