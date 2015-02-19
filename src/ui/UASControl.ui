@@ -107,7 +107,7 @@
       <number>50</number>
      </property>
      <property name="value">
-      <number>2</number>
+      <number>10</number>
      </property>
     </widget>
    </item>
@@ -344,7 +344,7 @@
       <number>1000</number>
      </property>
      <property name="singleStep">
-      <number>10</number>
+      <number>1</number>
      </property>
      <property name="value">
       <number>450</number>
