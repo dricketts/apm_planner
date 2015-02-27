@@ -1615,7 +1615,7 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_shim_stats_t packet_in = {
-		17.0,45.0,73.0,101.0
+		17.0,45.0,73.0,101.0,129.0,65
     };
 	mavlink_shim_stats_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -1623,6 +1623,8 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         	packet1.percent_rejected_unver = packet_in.percent_rejected_unver;
         	packet1.avg_accel_diff_ver = packet_in.avg_accel_diff_ver;
         	packet1.avg_accel_diff_unver = packet_in.avg_accel_diff_unver;
+        	packet1.change_avg = packet_in.change_avg;
+        	packet1.set_motors_from_acc_failed = packet_in.set_motors_from_acc_failed;
         
         
 
@@ -1632,12 +1634,12 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_pack(system_id, component_id, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver );
+	mavlink_msg_shim_stats_pack(system_id, component_id, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
 	mavlink_msg_shim_stats_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver );
+	mavlink_msg_shim_stats_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
 	mavlink_msg_shim_stats_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1650,7 +1652,7 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_send(MAVLINK_COMM_1 , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver );
+	mavlink_msg_shim_stats_send(MAVLINK_COMM_1 , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
 	mavlink_msg_shim_stats_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
