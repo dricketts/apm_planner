@@ -34,7 +34,7 @@
   <property name="toolTip">
    <string>Control widget to send basic control actions to the micro air vehicle</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0">
    <property name="leftMargin">
     <number>4</number>
    </property>
@@ -47,21 +47,21 @@
    <property name="bottomMargin">
     <number>4</number>
    </property>
-   <item row="10" column="2" colspan="2">
+   <item row="11" column="2" colspan="2">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Bound smoothing (cm)</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="2" colspan="2">
+   <item row="12" column="2" colspan="2">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Breaking accel (cm/s/s)</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
+   <item row="10" column="1">
     <widget class="QSpinBox" name="bound_verIn">
      <property name="maximum">
       <number>100000</number>
@@ -74,7 +74,7 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="1" colspan="2">
+   <item row="13" column="1" colspan="2">
     <widget class="QDoubleSpinBox" name="pwm_scaleIn">
      <property name="decimals">
       <number>4</number>
@@ -87,7 +87,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="2" colspan="2">
+   <item row="14" column="2" colspan="2">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Hover Throttle (0-1000)</string>
@@ -101,7 +101,7 @@
      </property>
     </widget>
    </item>
-   <item row="14" column="1">
+   <item row="15" column="1">
     <widget class="QSpinBox" name="smooth_lookaheadIn">
      <property name="maximum">
       <number>50</number>
@@ -286,7 +286,7 @@
      </item>
     </layout>
    </item>
-   <item row="12" column="3">
+   <item row="13" column="3">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>PWM accel scale</string>
@@ -306,7 +306,7 @@
      </property>
     </spacer>
    </item>
-   <item row="15" column="1" colspan="3">
+   <item row="16" column="1" colspan="3">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -338,7 +338,7 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="1">
+   <item row="14" column="1">
     <widget class="QSpinBox" name="hover_throttleIn">
      <property name="maximum">
       <number>1000</number>
@@ -365,14 +365,14 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="2" colspan="2">
+   <item row="10" column="2" colspan="2">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Bound verified (cm)</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="12" column="1">
     <widget class="QSpinBox" name="aminIn">
      <property name="minimum">
       <number>-980</number>
@@ -388,7 +388,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
+   <item row="11" column="1">
     <widget class="QSpinBox" name="bound_unverIn">
      <property name="maximum">
       <number>100000</number>
@@ -417,10 +417,17 @@
      </property>
     </spacer>
    </item>
-   <item row="14" column="2" colspan="2">
+   <item row="15" column="2" colspan="2">
     <widget class="QLabel" name="label_11">
      <property name="text">
       <string>Smooth Lookahead</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QCheckBox" name="velocityCheck">
+     <property name="text">
+      <string>Velocity</string>
      </property>
     </widget>
    </item>
