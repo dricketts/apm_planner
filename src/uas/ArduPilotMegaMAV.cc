@@ -491,7 +491,8 @@ void ArduPilotMegaMAV::disableShim()
 }
 
 void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-				     float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead)
+				     float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead,
+				     bool height_shim_on, bool vel_shim_on, float vel_ubverified, float vel_ubunverified)
 {
     mavlink_message_t msg;
 
@@ -505,7 +506,11 @@ void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified,
 				 amin,
 				 pwm_accel_scale,
 				 hover_throttle,
-				 smooth_lookahead
+				 smooth_lookahead,
+				 height_shim_on ? 1 : 0,
+				 vel_shim_on ? 1 : 0,
+				 vel_ubverified,
+				 vel_ubunverified
 					 );
     sendMessage(msg);
 }

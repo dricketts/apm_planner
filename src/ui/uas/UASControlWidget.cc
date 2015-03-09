@@ -263,7 +263,12 @@ void UASControlWidget::updateShimParams()
 			  ui.aminIn->value(),
 			  ui.pwm_scaleIn->value(),
 			  ui.hover_throttleIn->value(),
-			  ui.smooth_lookaheadIn->value());
+			  ui.smooth_lookaheadIn->value(),
+			  !ui.velocityCheck->isChecked(),
+			  ui.velocityCheck->isChecked(),
+			  ui.vel_bound_ver->value(),
+			  ui.vel_bound_unver->value()
+			  );
 
      }
 }
