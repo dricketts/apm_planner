@@ -496,8 +496,8 @@ void ArduPilotMegaMAV::setShimParams(
     float hprime_ub, float hprime_lb,
     float x_ub, float x_lb,
     float xprime_ub, float xprime_lb,
-    float roll_ub, float roll_lb,
-    float abraking) {
+    float roll_lb, float abraking,
+    float mid_throttle) {
       mavlink_message_t msg;
       mavlink_msg_shim_params_pack(getSystemId(),
         getComponentId(),
@@ -506,8 +506,8 @@ void ArduPilotMegaMAV::setShimParams(
         hprime_ub, hprime_lb,
         x_ub, x_lb,
         xprime_ub, xprime_lb,
-        roll_ub, roll_lb,
-        abraking
+        roll_lb, abraking,
+	mid_throttle
       );
       sendMessage(msg);
     }

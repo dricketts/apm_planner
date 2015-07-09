@@ -890,8 +890,8 @@ public slots:
       float hprime_ub, float hprime_lb,
       float x_ub, float x_lb,
       float xprime_ub, float xprime_lb,
-      float roll_ub, float roll_lb,
-      float abraking);
+      float roll_lb, float abraking,
+      float mid_throttle);
     /** @brief Set time over which throttle and pwm measurements are averaged */
     virtual void setWindowTime(float time);
 

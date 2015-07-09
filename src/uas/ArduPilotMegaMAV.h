@@ -173,8 +173,8 @@ public slots:
       float hprime_ub, float hprime_lb,
       float x_ub, float x_lb,
       float xprime_ub, float xprime_lb,
-      float roll_ub, float roll_lb,
-      float abraking);
+      float roll_lb, float abraking,
+      float mid_throttle);
 
     // Overides from UAS virtual interface
     virtual void armSystem();

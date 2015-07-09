@@ -453,8 +453,8 @@ signals:
       float hprime_ub, float hprime_lb,
       float x_ub, float x_lb,
       float xprime_ub, float xprime_lb,
-      float roll_ub, float roll_lb,
-      float abraking);
+      float roll_lb, float abraking,
+      float mid_throttle);
     /** @brief The robot state has changed */
     void statusChanged(int stateFlag);
     /** @brief A new component was detected or created */

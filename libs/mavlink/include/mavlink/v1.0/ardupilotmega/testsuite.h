@@ -1565,22 +1565,21 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_shim_params_t packet_in = {
-		17.0,45.0,73.0,101.0,129.0,157.0,18483,18587,89,156,223,34
+		17.0,45.0,73.0,101.0,129.0,157.0,185.0,213.0,241.0,269.0,297.0
     };
 	mavlink_shim_params_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.ubverified = packet_in.ubverified;
-        	packet1.ubunverified = packet_in.ubunverified;
-        	packet1.amin = packet_in.amin;
-        	packet1.pwm_accel_scale = packet_in.pwm_accel_scale;
-        	packet1.vel_ubverified = packet_in.vel_ubverified;
-        	packet1.vel_ubunverified = packet_in.vel_ubunverified;
-        	packet1.hover_throttle = packet_in.hover_throttle;
-        	packet1.smooth_lookahead = packet_in.smooth_lookahead;
-        	packet1.before = packet_in.before;
-        	packet1.smooth = packet_in.smooth;
-        	packet1.height_shim = packet_in.height_shim;
-        	packet1.vel_shim = packet_in.vel_shim;
+        	packet1.h_ub = packet_in.h_ub;
+        	packet1.h_lb = packet_in.h_lb;
+        	packet1.hprime_ub = packet_in.hprime_ub;
+        	packet1.hprime_lb = packet_in.hprime_lb;
+        	packet1.x_ub = packet_in.x_ub;
+        	packet1.x_lb = packet_in.x_lb;
+        	packet1.xprime_ub = packet_in.xprime_ub;
+        	packet1.xprime_lb = packet_in.xprime_lb;
+        	packet1.roll_lb = packet_in.roll_lb;
+        	packet1.abraking = packet_in.abraking;
+        	packet1.mid_throttle = packet_in.mid_throttle;
         
         
 
@@ -1590,12 +1589,12 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.smooth_lookahead , packet1.height_shim , packet1.vel_shim , packet1.vel_ubverified , packet1.vel_ubunverified );
+	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.h_ub , packet1.h_lb , packet1.hprime_ub , packet1.hprime_lb , packet1.x_ub , packet1.x_lb , packet1.xprime_ub , packet1.xprime_lb , packet1.roll_lb , packet1.abraking , packet1.mid_throttle );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.smooth_lookahead , packet1.height_shim , packet1.vel_shim , packet1.vel_ubverified , packet1.vel_ubunverified );
+	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.h_ub , packet1.h_lb , packet1.hprime_ub , packet1.hprime_lb , packet1.x_ub , packet1.x_lb , packet1.xprime_ub , packet1.xprime_lb , packet1.roll_lb , packet1.abraking , packet1.mid_throttle );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1608,7 +1607,7 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.before , packet1.smooth , packet1.ubverified , packet1.ubunverified , packet1.amin , packet1.pwm_accel_scale , packet1.hover_throttle , packet1.smooth_lookahead , packet1.height_shim , packet1.vel_shim , packet1.vel_ubverified , packet1.vel_ubunverified );
+	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.h_ub , packet1.h_lb , packet1.hprime_ub , packet1.hprime_lb , packet1.x_ub , packet1.x_lb , packet1.xprime_ub , packet1.xprime_lb , packet1.roll_lb , packet1.abraking , packet1.mid_throttle );
 	mavlink_msg_shim_params_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -1619,15 +1618,16 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_shim_stats_t packet_in = {
-		17.0,45.0,73.0,101.0,129.0,65
+		17.0,45.0,73.0,101.0,129.0,157.0,77
     };
 	mavlink_shim_stats_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.percent_rejected_ver = packet_in.percent_rejected_ver;
-        	packet1.percent_rejected_unver = packet_in.percent_rejected_unver;
-        	packet1.avg_accel_diff_ver = packet_in.avg_accel_diff_ver;
-        	packet1.avg_accel_diff_unver = packet_in.avg_accel_diff_unver;
-        	packet1.change_avg = packet_in.change_avg;
+        	packet1.percent_rejected = packet_in.percent_rejected;
+        	packet1.avg_accel_diff = packet_in.avg_accel_diff;
+        	packet1.x_position = packet_in.x_position;
+        	packet1.height = packet_in.height;
+        	packet1.vel_x = packet_in.vel_x;
+        	packet1.vel_vertical = packet_in.vel_vertical;
         	packet1.set_motors_from_acc_failed = packet_in.set_motors_from_acc_failed;
         
         
@@ -1638,12 +1638,12 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_pack(system_id, component_id, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
+	mavlink_msg_shim_stats_pack(system_id, component_id, &msg , packet1.percent_rejected , packet1.avg_accel_diff , packet1.set_motors_from_acc_failed , packet1.x_position , packet1.height , packet1.vel_x , packet1.vel_vertical );
 	mavlink_msg_shim_stats_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
+	mavlink_msg_shim_stats_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.percent_rejected , packet1.avg_accel_diff , packet1.set_motors_from_acc_failed , packet1.x_position , packet1.height , packet1.vel_x , packet1.vel_vertical );
 	mavlink_msg_shim_stats_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1656,53 +1656,8 @@ static void mavlink_test_shim_stats(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_stats_send(MAVLINK_COMM_1 , packet1.percent_rejected_ver , packet1.percent_rejected_unver , packet1.avg_accel_diff_ver , packet1.avg_accel_diff_unver , packet1.change_avg , packet1.set_motors_from_acc_failed );
+	mavlink_msg_shim_stats_send(MAVLINK_COMM_1 , packet1.percent_rejected , packet1.avg_accel_diff , packet1.set_motors_from_acc_failed , packet1.x_position , packet1.height , packet1.vel_x , packet1.vel_vertical );
 	mavlink_msg_shim_stats_decode(last_msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-}
-
-static void mavlink_test_throttle_pwm_stats(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
-{
-	mavlink_message_t msg;
-        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-        uint16_t i;
-	mavlink_throttle_pwm_stats_t packet_in = {
-		963497464,45.0,73.0
-    };
-	mavlink_throttle_pwm_stats_t packet1, packet2;
-        memset(&packet1, 0, sizeof(packet1));
-        	packet1.window_time = packet_in.window_time;
-        	packet1.pwm_avg = packet_in.pwm_avg;
-        	packet1.throttle_avg = packet_in.throttle_avg;
-        
-        
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_throttle_pwm_stats_encode(system_id, component_id, &msg, &packet1);
-	mavlink_msg_throttle_pwm_stats_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_throttle_pwm_stats_pack(system_id, component_id, &msg , packet1.window_time , packet1.pwm_avg , packet1.throttle_avg );
-	mavlink_msg_throttle_pwm_stats_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_throttle_pwm_stats_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.window_time , packet1.pwm_avg , packet1.throttle_avg );
-	mavlink_msg_throttle_pwm_stats_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-        mavlink_msg_to_send_buffer(buffer, &msg);
-        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
-        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
-        }
-	mavlink_msg_throttle_pwm_stats_decode(last_msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-        
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_throttle_pwm_stats_send(MAVLINK_COMM_1 , packet1.window_time , packet1.pwm_avg , packet1.throttle_avg );
-	mavlink_msg_throttle_pwm_stats_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
@@ -1742,7 +1697,6 @@ static void mavlink_test_ardupilotmega(uint8_t system_id, uint8_t component_id, 
 	mavlink_test_shim_enable_disable(system_id, component_id, last_msg);
 	mavlink_test_shim_params(system_id, component_id, last_msg);
 	mavlink_test_shim_stats(system_id, component_id, last_msg);
-	mavlink_test_throttle_pwm_stats(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus

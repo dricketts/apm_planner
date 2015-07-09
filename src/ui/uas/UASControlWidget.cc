@@ -266,9 +266,9 @@ void UASControlWidget::updateShimParams()
         (float)ui.x_lbIn->value(),
         (float)ui.xprime_ubIn->value(),
         (float)ui.xprime_lbIn->value(),
-        (float)ui.roll_ubIn->value(),
         (float)ui.roll_lbIn->value(),
-        (float)ui.abrakingIn->value()
+        (float)ui.abrakingIn->value(),
+        (float)ui.hoverIn->value()
 			  );
 
      }

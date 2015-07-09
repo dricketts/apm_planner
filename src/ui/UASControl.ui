@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>267</width>
-    <height>668</height>
+    <height>711</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,140 +47,6 @@
    <property name="bottomMargin">
     <number>4</number>
    </property>
-   <item row="17" column="3" colspan="2">
-    <widget class="QLabel" name="label_13">
-     <property name="text">
-      <string>Roll att min (??)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="3" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Vert pos min (cm)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="3" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Horiz pos max (cm)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1" colspan="4">
-    <widget class="QPushButton" name="paramSetButton">
-     <property name="text">
-      <string>Set Params</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="3">
-    <widget class="QComboBox" name="modeComboBox">
-     <property name="minimumSize">
-      <size>
-       <width>25</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Select MAV operation mode</string>
-     </property>
-     <property name="statusTip">
-      <string>Select MAV operation mode</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" rowspan="2" colspan="4">
-    <widget class="QLabel" name="controlStatusLabel">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>10</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Currently controlled system</string>
-     </property>
-     <property name="statusTip">
-      <string>Currently controlled system</string>
-     </property>
-     <property name="text">
-      <string>UNCONNECTED</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="margin">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="setModeButton">
-     <property name="minimumSize">
-      <size>
-       <width>25</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Transmit and enable mode on MAV</string>
-     </property>
-     <property name="statusTip">
-      <string>Transmit and enable mode on MAV</string>
-     </property>
-     <property name="text">
-      <string>Set</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../qgroundcontrol.qrc">
-       <normaloff>:/files/images/devices/network-wireless.svg</normaloff>:/files/images/devices/network-wireless.svg</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1" colspan="4">
-    <widget class="QLabel" name="lastActionLabel">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>10</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Status label</string>
-     </property>
-     <property name="statusTip">
-      <string>Status label</string>
-     </property>
-     <property name="text">
-      <string>No actions executed so far</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5" rowspan="6">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>30</width>
-       <height>159</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="8" column="3" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Vert pos max (cm)</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="1" colspan="4">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
@@ -329,13 +195,6 @@
      </property>
     </spacer>
    </item>
-   <item row="16" column="3" colspan="2">
-    <widget class="QLabel" name="label_12">
-     <property name="text">
-      <string>Roll att max (??)</string>
-     </property>
-    </widget>
-   </item>
    <item row="15" column="3" colspan="2">
     <widget class="QLabel" name="label_10">
      <property name="text">
@@ -357,7 +216,7 @@
      </property>
     </widget>
    </item>
-   <item row="18" column="3" colspan="2">
+   <item row="17" column="3" colspan="2">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Braking accel (cm/s/s)</string>
@@ -463,6 +322,9 @@
      <property name="decimals">
       <number>4</number>
      </property>
+     <property name="minimum">
+      <double>-1000000.000000000000000</double>
+     </property>
      <property name="maximum">
       <double>10000.000000000000000</double>
      </property>
@@ -472,19 +334,6 @@
     </widget>
    </item>
    <item row="16" column="1">
-    <widget class="QDoubleSpinBox" name="roll_ubIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="17" column="1">
     <widget class="QDoubleSpinBox" name="roll_lbIn">
      <property name="decimals">
       <number>4</number>
@@ -497,7 +346,7 @@
      </property>
     </widget>
    </item>
-   <item row="18" column="1">
+   <item row="17" column="1">
     <widget class="QDoubleSpinBox" name="abrakingIn">
      <property name="decimals">
       <number>4</number>
@@ -507,6 +356,154 @@
      </property>
      <property name="maximum">
       <double>10000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="3" colspan="2">
+    <widget class="QLabel" name="label_13">
+     <property name="text">
+      <string>Roll att min (radians)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="3" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Vert pos min (cm)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="3" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Horiz pos max (cm)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1" colspan="4">
+    <widget class="QPushButton" name="paramSetButton">
+     <property name="text">
+      <string>Set Params</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="3">
+    <widget class="QComboBox" name="modeComboBox">
+     <property name="minimumSize">
+      <size>
+       <width>25</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Select MAV operation mode</string>
+     </property>
+     <property name="statusTip">
+      <string>Select MAV operation mode</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2" colspan="4">
+    <widget class="QLabel" name="controlStatusLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>10</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Currently controlled system</string>
+     </property>
+     <property name="statusTip">
+      <string>Currently controlled system</string>
+     </property>
+     <property name="text">
+      <string>UNCONNECTED</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4">
+    <widget class="QPushButton" name="setModeButton">
+     <property name="minimumSize">
+      <size>
+       <width>25</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Transmit and enable mode on MAV</string>
+     </property>
+     <property name="statusTip">
+      <string>Transmit and enable mode on MAV</string>
+     </property>
+     <property name="text">
+      <string>Set</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../qgroundcontrol.qrc">
+       <normaloff>:/files/images/devices/network-wireless.svg</normaloff>:/files/images/devices/network-wireless.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="4">
+    <widget class="QLabel" name="lastActionLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>10</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Status label</string>
+     </property>
+     <property name="statusTip">
+      <string>Status label</string>
+     </property>
+     <property name="text">
+      <string>No actions executed so far</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5" rowspan="6">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>30</width>
+       <height>159</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="8" column="3" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Vert pos max (cm)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="1">
+    <widget class="QDoubleSpinBox" name="hoverIn">
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="3" colspan="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Hover throttle</string>
      </property>
     </widget>
    </item>
