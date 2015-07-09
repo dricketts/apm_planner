@@ -41,9 +41,9 @@ const double UAS::lipoEmpty = 3.5f; ///< Discharged voltage
 
 /**
 * Gets the settings from the previous UAS (name, airframe, autopilot, battery specs)
-* by calling readSettings. This means the new UAS will have the same settings 
+* by calling readSettings. This means the new UAS will have the same settings
 * as the previous one created unless one calls deleteSettings in the code after
-* creating the UAS. 
+* creating the UAS.
 */
 UAS::UAS(MAVLinkProtocol* protocol, int id) : UASInterface(),
     uasId(id),
@@ -167,16 +167,16 @@ UAS::UAS(MAVLinkProtocol* protocol, int id) : UASInterface(),
         componentID[i] = -1;
         componentMulti[i] = false;
     }
-    
+
     color = UASInterface::getNextColor();
     setBatterySpecs(QString("9V,9.5V,12.6V"));
     connect(statusTimeout, SIGNAL(timeout()), this, SLOT(updateState()));
     connect(this, SIGNAL(systemSpecsChanged(int)), this, SLOT(writeSettings()));
     statusTimeout->start(500);
-    readSettings(); 
+    readSettings();
     // Initial signals
     emit disarmed();
-    emit armingChanged(false);  
+    emit armingChanged(false);
 
     systemId = QGC::defaultSystemId;
     componentId = QGC::defaultComponentId;
@@ -235,7 +235,7 @@ void UAS::readSettings()
 
 /**
 *  Deletes the settings origianally read into the UAS by readSettings.
-*  This is in case one does not want the old values but would rather 
+*  This is in case one does not want the old values but would rather
 *  start with the values assigned by the constructor.
 */
 void UAS::deleteSettings()
@@ -408,7 +408,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
 
         switch (message.msgid)
         {
-	  
+
         case MAVLINK_MSG_ID_HEARTBEAT:
         {
             if (multiComponentSourceDetected && wrongComponent)
@@ -419,7 +419,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
             emit heartbeat(this);
             mavlink_heartbeat_t state;
             mavlink_msg_heartbeat_decode(&message, &state);
-			
+
 			// Send the base_mode and system_status values to the plotter. This uses the ground time
 			// so the Ground Time checkbox must be ticked for these values to display
             quint64 time = getUnixTime();
@@ -427,7 +427,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
 			emit valueChanged(uasId, name.arg("base_mode"), "bits", state.base_mode, time);
 			emit valueChanged(uasId, name.arg("custom_mode"), "bits", state.custom_mode, time);
 			emit valueChanged(uasId, name.arg("system_status"), "-", state.system_status, time);
-			
+
             // Set new type if it has changed
             if (this->type != state.type)
             {
@@ -793,7 +793,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
             setLongitude(pos.lon/(double)1E7);
             setAltitudeAMSL(pos.alt/1000.0);
             setAltitudeRelative(pos.relative_alt/1000.0);
-			
+
             //valueChanged(uasId, str.arg(vect.address+(i*2)), "ui16", mem1[i], time);
             QString name = QString("M%1:GCS Status.%2").arg(message.sysid);
             emit valueChanged(uasId,name.arg("Latitude"),"deg",QVariant((double)pos.lat / (double(1E7))),time);
@@ -842,7 +842,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
             int loc_type = pos.fix_type;
             if (loc_type == 1)
             {
-                loc_type = 0; 
+                loc_type = 0;
             }
             emit localizationChanged(this, loc_type);
             setSatelliteCount(pos.satellites_visible);
@@ -870,7 +870,7 @@ void UAS::receiveMessage(LinkInterface* link, mavlink_message_t message)
                     setAltitudeAMSL(altitude_gps);
                     emit globalPositionChanged(this, getLatitude(), getLongitude(), getAltitudeAMSL(), time);
                     emit altitudeChanged(this, altitudeAMSL, altitudeRelative, -speedZ, time);
-                
+
                     double vel = pos.vel/100.0;
                     // Smaller than threshold and not NaN
                     if ((vel < 1000000) && !isnan(vel) && !isinf(vel))
@@ -2005,7 +2005,7 @@ QString UAS::getCustomModeAudioText()
     return customModeString + getCustomModeText();
 }
 
-/** 
+/**
 * Get the status of the code and a description of the status.
 * Status can be unitialized, booting up, calibrating sensors, active
 * standby, cirtical, emergency, shutdown or unknown.
@@ -2207,7 +2207,7 @@ void UAS::enableAllDataTransmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableRawSensorDataTransmission(int rate)
@@ -2231,7 +2231,7 @@ void UAS::enableRawSensorDataTransmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableExtendedSystemStatusTransmission(int rate)
@@ -2255,7 +2255,7 @@ void UAS::enableExtendedSystemStatusTransmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableRCChannelDataTransmission(int rate)
@@ -2284,7 +2284,7 @@ void UAS::enableRCChannelDataTransmission(int rate)
 #endif
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableRawControllerDataTransmission(int rate)
@@ -2330,7 +2330,7 @@ void UAS::enableRawControllerDataTransmission(int rate)
 //    sendMessage(msg);
 //}
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enablePositionTransmission(int rate)
@@ -2354,7 +2354,7 @@ void UAS::enablePositionTransmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableExtra1Transmission(int rate)
@@ -2379,7 +2379,7 @@ void UAS::enableExtra1Transmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableExtra2Transmission(int rate)
@@ -2404,7 +2404,7 @@ void UAS::enableExtra2Transmission(int rate)
     sendMessage(msg);
 }
 
-/** 
+/**
 * @param rate The update rate in Hz the message should be sent
 */
 void UAS::enableExtra3Transmission(int rate)
@@ -2433,7 +2433,7 @@ void UAS::enableExtra3Transmission(int rate)
  * Set a parameter value onboard
  *
  * @param component The component to set the parameter
- * @param id Name of the parameter 
+ * @param id Name of the parameter
  */
 void UAS::setParameter(const int compId, const QString& paramId, const QVariant& value)
 {
@@ -2689,7 +2689,7 @@ void UAS::setSystemType(int systemType)
     if((systemType >= MAV_TYPE_GENERIC) && (systemType < MAV_TYPE_ENUM_END))
     {
       type = systemType;
-    
+
       switch (systemType)
       {
       case MAV_TYPE_FIXED_WING:
@@ -2799,9 +2799,13 @@ void UAS::disableShim() {}
 /**
  * This does nothing. Subclasses should override to actually enable the shim.
  */
-void UAS::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-			float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead,
-			bool height_shim_on, bool vel_shim_on, float vel_ubverified, float vel_ubunverified) {}
+ void UAS::setShimParams(
+   float h_ub, float h_lb,
+   float hprime_ub, float hprime_lb,
+   float x_ub, float x_lb,
+   float xprime_ub, float xprime_lb,
+   float roll_ub, float roll_lb,
+   float abraking) {}
 
 /**
  * This does nothing. Subclasses should override to actually enable the shim.
@@ -3103,8 +3107,8 @@ void UAS::go()
     sendMessage(msg);
 }
 
-/** 
-* Order the robot to return home 
+/**
+* Order the robot to return home
 */
 void UAS::home()
 {
@@ -3120,7 +3124,7 @@ void UAS::home()
 }
 
 /**
-* Order the robot to land on the runway 
+* Order the robot to land on the runway
 */
 void UAS::land()
 {
@@ -3296,7 +3300,7 @@ void UAS::sendHilGroundTruth(quint64 time_us, float roll, float pitch, float yaw
     Q_UNUSED(xacc);
     Q_UNUSED(yacc);
     Q_UNUSED(zacc);
-    
+
         // Emit attitude for cross-check
         emit valueChanged(uasId, "roll sim", "rad", roll, getUnixTime());
         emit valueChanged(uasId, "pitch sim", "rad", pitch, getUnixTime());
@@ -3515,8 +3519,8 @@ const QString& UAS::getShortState() const
     return shortStateText;
 }
 
-/** 
-* The mode can be autonomous, guided, manual or armed. It will also return if 
+/**
+* The mode can be autonomous, guided, manual or armed. It will also return if
 * hardware in the loop is being used.
 * @return the audio mode text for the id given.
 */

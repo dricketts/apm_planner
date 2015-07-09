@@ -490,44 +490,27 @@ void ArduPilotMegaMAV::disableShim()
     sendMessage(msg);
 }
 
-void ArduPilotMegaMAV::setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-				     float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead,
-				     bool height_shim_on, bool vel_shim_on, float vel_ubverified, float vel_ubunverified)
-{
-    mavlink_message_t msg;
-
-    mavlink_msg_shim_params_pack(getSystemId(),
-					 getComponentId(),
-					 &msg,
-				 before ? 1 : 0,
-				 smooth ? 1 : 0,
-				 ubverified,
-				 ubunverified,
-				 amin,
-				 pwm_accel_scale,
-				 hover_throttle,
-				 smooth_lookahead,
-				 height_shim_on ? 1 : 0,
-				 vel_shim_on ? 1 : 0,
-				 vel_ubverified,
-				 vel_ubunverified
-					 );
-    sendMessage(msg);
-}
-
-void ArduPilotMegaMAV::setWindowTime(float time)
-{
-    mavlink_message_t msg;
-
-    mavlink_msg_throttle_pwm_stats_pack(getSystemId(),
-					getComponentId(),
-					&msg,
-					time,
-					0,
-					0
-					);
-    sendMessage(msg);
-}
+// TODO - when you update shim params update here --M
+void ArduPilotMegaMAV::setShimParams(
+    float h_ub, float h_lb,
+    float hprime_ub, float hprime_lb,
+    float x_ub, float x_lb,
+    float xprime_ub, float xprime_lb,
+    float roll_ub, float roll_lb,
+    float abraking) {
+      mavlink_message_t msg;
+      mavlink_msg_shim_params_pack(getSystemId(),
+        getComponentId(),
+        &msg,
+        h_ub, h_lb,
+        hprime_ub, hprime_lb,
+        x_ub, x_lb,
+        xprime_ub, xprime_lb,
+        roll_ub, roll_lb,
+        abraking
+      );
+      sendMessage(msg);
+    }
 
 void ArduPilotMegaMAV::armSystem()
 {

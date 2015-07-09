@@ -138,7 +138,7 @@ void UASControlWidget::updateStatemachine()
 //     {
 //         ui.shimButton->setText(tr("ENABLE SHIM"));
 //     }
-    
+
 }
 
 /**
@@ -251,23 +251,24 @@ void UASControlWidget::transmitMode()
 //      QTimer::singleShot(200, this, SLOT(updateStatemachine()));
 // }
 
+// update our shim parameters
 void UASControlWidget::updateShimParams()
 {
      UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
      if (mav)
      {
-       mav->setShimParams(ui.beforeIn->isChecked(),
-			  ui.smoothIn->isChecked(),
-			  ui.bound_verIn->value(),
-			  ui.bound_unverIn->value(),
-			  ui.aminIn->value(),
-			  ui.pwm_scaleIn->value(),
-			  ui.hover_throttleIn->value(),
-			  ui.smooth_lookaheadIn->value(),
-			  !ui.velocityCheck->isChecked(),
-			  ui.velocityCheck->isChecked(),
-			  ui.vel_bound_ver->value(),
-			  ui.vel_bound_unver->value()
+       mav->setShimParams(
+        (float)ui.h_ubIn->value(),
+			  (float)ui.h_lbIn->value(),
+			  (float)ui.hprime_ubIn->value(),
+			  (float)ui.hprime_lbIn->value(),
+			  (float)ui.x_ubIn->value(),
+        (float)ui.x_lbIn->value(),
+        (float)ui.xprime_ubIn->value(),
+        (float)ui.xprime_lbIn->value(),
+        (float)ui.roll_ubIn->value(),
+        (float)ui.roll_lbIn->value(),
+        (float)ui.abrakingIn->value()
 			  );
 
      }
@@ -311,4 +312,3 @@ void UASControlWidget::cycleContextButton()
     }
 
 }
-

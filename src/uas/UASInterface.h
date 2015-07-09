@@ -227,32 +227,32 @@ public:
      */
     static QColor getNextColor() {
         /* Create color map */
-        static QList<QColor> colors = QList<QColor>() 
-		<< QColor(231,72,28) 
-		<< QColor(104,64,240) 
-		<< QColor(203,254,121) 
+        static QList<QColor> colors = QList<QColor>()
+		<< QColor(231,72,28)
+		<< QColor(104,64,240)
+		<< QColor(203,254,121)
 		<< QColor(161,252,116)
-               	<< QColor(232,33,47) 
-		<< QColor(116,251,110) 
-		<< QColor(234,38,107) 
+               	<< QColor(232,33,47)
+		<< QColor(116,251,110)
+		<< QColor(234,38,107)
 		<< QColor(104,250,138)
-                << QColor(235,43,165) 
-		<< QColor(98,248,176) 
-		<< QColor(236,48,221) 
+                << QColor(235,43,165)
+		<< QColor(98,248,176)
+		<< QColor(236,48,221)
 		<< QColor(92,247,217)
-                << QColor(200,54,238) 
-		<< QColor(87,231,246) 
-		<< QColor(151,59,239) 
+                << QColor(200,54,238)
+		<< QColor(87,231,246)
+		<< QColor(151,59,239)
 		<< QColor(81,183,244)
-                << QColor(75,133,243) 
-		<< QColor(242,255,128) 
+                << QColor(75,133,243)
+		<< QColor(242,255,128)
 		<< QColor(230,126,23);
-        
+
         static int nextColor = -1;
         if(nextColor == 18){//if at the end of the list
             nextColor = -1;//go back to the beginning
         }
-        nextColor++; 
+        nextColor++;
         return colors[nextColor];//return the next color
    }
 
@@ -448,9 +448,13 @@ protected:
 signals:
     /** @brief the shim status has changed */
     void shimStatusChanged(bool enabled);
-    /** @brief Display shim params sent from the vehicle */
-    void broadcastShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-			   float amin, float pwm_accel_scale, float hover_throttle, uint32_t window_time);
+    /** @brief Display shim params sent from the vehicle, we don't use this anymore though */
+    void broadcastShimParams(float h_ub, float h_lb,
+      float hprime_ub, float hprime_lb,
+      float x_ub, float x_lb,
+      float xprime_ub, float xprime_lb,
+      float roll_ub, float roll_lb,
+      float abraking);
     /** @brief The robot state has changed */
     void statusChanged(int stateFlag);
     /** @brief A new component was detected or created */

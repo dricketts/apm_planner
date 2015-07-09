@@ -760,7 +760,7 @@ public:
             break;
         }
     }
-	
+
   	/** From UASInterface */
     bool isMultirotor();
 	bool isRotaryWing();
@@ -791,7 +791,7 @@ public slots:
           this->airframe = airframe;
           emit systemSpecsChanged(uasId);
         }
-        
+
     }
     /** @brief Set a new name **/
     void setUASName(const QString& name);
@@ -880,14 +880,18 @@ public slots:
     void startLowBattAlarm();
     void stopLowBattAlarm();
 
-    /** @brief Enable the height shim */
+    /** @brief Enable the (box) shim */
     virtual void enableShim();
-    /** @brief Disable the height shim */
+    /** @brief Disable the (box) shim */
     virtual void disableShim();
-    /** @brief Set height shim parameters */
-    virtual void setShimParams(bool before, bool smooth, float ubverified, float ubunverified,
-			       float amin, float pwm_accel_scale, float hover_throttle, uint16_t smooth_lookahead,
-			       bool height_shim_on, bool vel_shim_on, float vel_ubverified, float vel_ubunverified);
+    /** @brief Set (box) shim parameters */
+    virtual void setShimParams(
+      float h_ub, float h_lb,
+      float hprime_ub, float hprime_lb,
+      float x_ub, float x_lb,
+      float xprime_ub, float xprime_lb,
+      float roll_ub, float roll_lb,
+      float abraking);
     /** @brief Set time over which throttle and pwm measurements are averaged */
     virtual void setWindowTime(float time);
 
@@ -1006,7 +1010,7 @@ public slots:
     void startDataRecording();
     void stopDataRecording();
     void deleteSettings();
-	
+
     // Log Download
     void logRequestList(uint16_t start, uint16_t end);
     void logRequestData(uint16_t id, uint32_t ofs, uint32_t count);
