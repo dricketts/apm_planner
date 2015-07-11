@@ -473,7 +473,8 @@ void ArduPilotMegaMAV::enableShim()
     mavlink_msg_shim_enable_disable_pack(getSystemId(),
 					 getComponentId(),
 					 &msg,
-					 1.0 // 1.0 for enable
+					 1.0, // 1.0 for enable
+           0.0 // shouldn't matter, should never get called
 					 );
     sendMessage(msg);
 }
@@ -485,7 +486,8 @@ void ArduPilotMegaMAV::disableShim()
     mavlink_msg_shim_enable_disable_pack(getSystemId(),
 					 getComponentId(),
 					 &msg,
-					 0.0 // 0.0 for disable
+					 0.0, // 0.0 for disable
+           0.0 // shouldn't ever get called
 					 );
     sendMessage(msg);
 }
