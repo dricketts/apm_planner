@@ -15,19 +15,21 @@ typedef struct __mavlink_shim_params_t
  float roll_lb; ///< the lower bound on roll angle allowed by the shim in (??DEGREES??)
  float abraking; ///< The braking acceleration in cm/s/s issued when the height-dimension shim is engaged. Should be at least the acceleration due to gravity.
  float mid_throttle; ///< The throttle required for hover.
+ uint8_t smooth1; ///< 1 to enable smoothing (type 1), 0 to disable
+ uint8_t smooth2; ///< 1 to enable smoothing (type 2), 0 to disable
 } mavlink_shim_params_t;
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 44
-#define MAVLINK_MSG_ID_231_LEN 44
+#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 46
+#define MAVLINK_MSG_ID_231_LEN 46
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 197
-#define MAVLINK_MSG_ID_231_CRC 197
+#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 204
+#define MAVLINK_MSG_ID_231_CRC 204
 
 
 
 #define MAVLINK_MESSAGE_INFO_SHIM_PARAMS { \
 	"SHIM_PARAMS", \
-	11, \
+	13, \
 	{  { "h_ub", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_shim_params_t, h_ub) }, \
          { "h_lb", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_shim_params_t, h_lb) }, \
          { "hprime_ub", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_shim_params_t, hprime_ub) }, \
@@ -39,6 +41,8 @@ typedef struct __mavlink_shim_params_t
          { "roll_lb", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_shim_params_t, roll_lb) }, \
          { "abraking", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_shim_params_t, abraking) }, \
          { "mid_throttle", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_shim_params_t, mid_throttle) }, \
+         { "smooth1", NULL, MAVLINK_TYPE_UINT8_T, 0, 44, offsetof(mavlink_shim_params_t, smooth1) }, \
+         { "smooth2", NULL, MAVLINK_TYPE_UINT8_T, 0, 45, offsetof(mavlink_shim_params_t, smooth2) }, \
          } \
 }
 
@@ -49,6 +53,8 @@ typedef struct __mavlink_shim_params_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
+ * @param smooth1 1 to enable smoothing (type 1), 0 to disable
+ * @param smooth2 1 to enable smoothing (type 2), 0 to disable
  * @param h_ub the height upper bound of the shim in cm
  * @param h_lb the height lower bound of the shim in cm
  * @param hprime_ub the vertical velocity upper bound of the shim in cm/s
@@ -63,7 +69,7 @@ typedef struct __mavlink_shim_params_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
+						       uint8_t smooth1, uint8_t smooth2, float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -78,6 +84,8 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
 	_mav_put_float(buf, 32, roll_lb);
 	_mav_put_float(buf, 36, abraking);
 	_mav_put_float(buf, 40, mid_throttle);
+	_mav_put_uint8_t(buf, 44, smooth1);
+	_mav_put_uint8_t(buf, 45, smooth2);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
@@ -93,6 +101,8 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
+	packet.smooth1 = smooth1;
+	packet.smooth2 = smooth2;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #endif
@@ -111,6 +121,8 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
+ * @param smooth1 1 to enable smoothing (type 1), 0 to disable
+ * @param smooth2 1 to enable smoothing (type 2), 0 to disable
  * @param h_ub the height upper bound of the shim in cm
  * @param h_lb the height lower bound of the shim in cm
  * @param hprime_ub the vertical velocity upper bound of the shim in cm/s
@@ -126,7 +138,7 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
  */
 static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           float h_ub,float h_lb,float hprime_ub,float hprime_lb,float x_ub,float x_lb,float xprime_ub,float xprime_lb,float roll_lb,float abraking,float mid_throttle)
+						           uint8_t smooth1,uint8_t smooth2,float h_ub,float h_lb,float hprime_ub,float hprime_lb,float x_ub,float x_lb,float xprime_ub,float xprime_lb,float roll_lb,float abraking,float mid_throttle)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -141,6 +153,8 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
 	_mav_put_float(buf, 32, roll_lb);
 	_mav_put_float(buf, 36, abraking);
 	_mav_put_float(buf, 40, mid_throttle);
+	_mav_put_uint8_t(buf, 44, smooth1);
+	_mav_put_uint8_t(buf, 45, smooth2);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
@@ -156,6 +170,8 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
+	packet.smooth1 = smooth1;
+	packet.smooth2 = smooth2;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #endif
@@ -178,7 +194,7 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
  */
 static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->h_ub, shim_params->h_lb, shim_params->hprime_ub, shim_params->hprime_lb, shim_params->x_ub, shim_params->x_lb, shim_params->xprime_ub, shim_params->xprime_lb, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle);
+	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->smooth1, shim_params->smooth2, shim_params->h_ub, shim_params->h_lb, shim_params->hprime_ub, shim_params->hprime_lb, shim_params->x_ub, shim_params->x_lb, shim_params->xprime_ub, shim_params->xprime_lb, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle);
 }
 
 /**
@@ -192,13 +208,15 @@ static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->h_ub, shim_params->h_lb, shim_params->hprime_ub, shim_params->hprime_lb, shim_params->x_ub, shim_params->x_lb, shim_params->xprime_ub, shim_params->xprime_lb, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle);
+	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->smooth1, shim_params->smooth2, shim_params->h_ub, shim_params->h_lb, shim_params->hprime_ub, shim_params->hprime_lb, shim_params->x_ub, shim_params->x_lb, shim_params->xprime_ub, shim_params->xprime_lb, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle);
 }
 
 /**
  * @brief Send a shim_params message
  * @param chan MAVLink channel to send the message
  *
+ * @param smooth1 1 to enable smoothing (type 1), 0 to disable
+ * @param smooth2 1 to enable smoothing (type 2), 0 to disable
  * @param h_ub the height upper bound of the shim in cm
  * @param h_lb the height lower bound of the shim in cm
  * @param hprime_ub the vertical velocity upper bound of the shim in cm/s
@@ -213,7 +231,7 @@ static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, ui
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
+static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t smooth1, uint8_t smooth2, float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
@@ -228,6 +246,8 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, float h_
 	_mav_put_float(buf, 32, roll_lb);
 	_mav_put_float(buf, 36, abraking);
 	_mav_put_float(buf, 40, mid_throttle);
+	_mav_put_uint8_t(buf, 44, smooth1);
+	_mav_put_uint8_t(buf, 45, smooth2);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -247,6 +267,8 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, float h_
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
+	packet.smooth1 = smooth1;
+	packet.smooth2 = smooth2;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, (const char *)&packet, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -264,7 +286,7 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, float h_
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
+static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t smooth1, uint8_t smooth2, float h_ub, float h_lb, float hprime_ub, float hprime_lb, float x_ub, float x_lb, float xprime_ub, float xprime_lb, float roll_lb, float abraking, float mid_throttle)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -279,6 +301,8 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 	_mav_put_float(buf, 32, roll_lb);
 	_mav_put_float(buf, 36, abraking);
 	_mav_put_float(buf, 40, mid_throttle);
+	_mav_put_uint8_t(buf, 44, smooth1);
+	_mav_put_uint8_t(buf, 45, smooth2);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -298,6 +322,8 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 	packet->roll_lb = roll_lb;
 	packet->abraking = abraking;
 	packet->mid_throttle = mid_throttle;
+	packet->smooth1 = smooth1;
+	packet->smooth2 = smooth2;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, (const char *)packet, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -312,6 +338,26 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 
 // MESSAGE SHIM_PARAMS UNPACKING
 
+
+/**
+ * @brief Get field smooth1 from shim_params message
+ *
+ * @return 1 to enable smoothing (type 1), 0 to disable
+ */
+static inline uint8_t mavlink_msg_shim_params_get_smooth1(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  44);
+}
+
+/**
+ * @brief Get field smooth2 from shim_params message
+ *
+ * @return 1 to enable smoothing (type 2), 0 to disable
+ */
+static inline uint8_t mavlink_msg_shim_params_get_smooth2(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  45);
+}
 
 /**
  * @brief Get field h_ub from shim_params message
@@ -443,6 +489,8 @@ static inline void mavlink_msg_shim_params_decode(const mavlink_message_t* msg, 
 	shim_params->roll_lb = mavlink_msg_shim_params_get_roll_lb(msg);
 	shim_params->abraking = mavlink_msg_shim_params_get_abraking(msg);
 	shim_params->mid_throttle = mavlink_msg_shim_params_get_mid_throttle(msg);
+	shim_params->smooth1 = mavlink_msg_shim_params_get_smooth1(msg);
+	shim_params->smooth2 = mavlink_msg_shim_params_get_smooth2(msg);
 #else
 	memcpy(shim_params, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #endif
