@@ -169,7 +169,7 @@ public slots:
     virtual void enableShim();
     virtual void disableShim();
     virtual void setShimParams(
-      bool smooth, float h_ub, float h_lb,
+      bool smooth, float lookahead, float h_ub, float h_lb,
       float hprime_ub, float hprime_lb,
       float x_ub, float x_lb,
       float xprime_ub, float xprime_lb,

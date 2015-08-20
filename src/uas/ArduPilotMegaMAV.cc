@@ -492,7 +492,7 @@ void ArduPilotMegaMAV::disableShim()
 
 // TODO - when you update shim params update here --M
 void ArduPilotMegaMAV::setShimParams(
-    bool smooth, float h_ub, float h_lb,
+    bool smooth, float lookahead, float h_ub, float h_lb,
     float hprime_ub, float hprime_lb,
     float x_ub, float x_lb,
     float xprime_ub, float xprime_lb,
@@ -502,7 +502,7 @@ void ArduPilotMegaMAV::setShimParams(
       mavlink_msg_shim_params_pack(getSystemId(),
         getComponentId(),
         &msg,
-        smooth, h_ub, h_lb,
+        smooth, lookahead, h_ub, h_lb,
         hprime_ub, hprime_lb,
         x_ub, x_lb,
         xprime_ub, xprime_lb,

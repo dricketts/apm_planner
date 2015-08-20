@@ -34,7 +34,7 @@
   <property name="toolTip">
    <string>Control widget to send basic control actions to the micro air vehicle</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0,0">
    <property name="leftMargin">
     <number>4</number>
    </property>
@@ -213,7 +213,7 @@
      </property>
     </widget>
    </item>
-   <item row="20" column="1" colspan="4">
+   <item row="21" column="1" colspan="4">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -541,6 +541,23 @@
     <widget class="QCheckBox" name="smoothIn">
      <property name="text">
       <string>Smooth</string>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="1">
+    <widget class="QDoubleSpinBox" name="lookaheadIn">
+     <property name="maximum">
+      <double>10000000.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="3">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Lookahead</string>
      </property>
     </widget>
    </item>
