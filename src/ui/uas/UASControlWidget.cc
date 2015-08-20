@@ -258,8 +258,7 @@ void UASControlWidget::updateShimParams()
      if (mav)
      {
        mav->setShimParams(
-        ui.smooth1In->isChecked(),
-        ui.smooth2In->isChecked(),
+        ui.smoothIn->isChecked(),
         (float)ui.h_ubIn->value(),
 			  (float)ui.h_lbIn->value(),
 			  (float)ui.hprime_ubIn->value(),
