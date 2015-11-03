@@ -491,24 +491,42 @@ void ArduPilotMegaMAV::disableShim()
 }
 
 // TODO - when you update shim params update here --M
-void ArduPilotMegaMAV::setShimParams(
-    bool smooth, float lookahead, float h_ub, float h_lb,
-    float hprime_ub, float hprime_lb,
-    float x_ub, float x_lb,
-    float xprime_ub, float xprime_lb,
-    float roll_lb, float abraking,
-    float mid_throttle) {
+void ArduPilotMegaMAV::setShimParams(bool smooth, uint8_t lookahead, float roll_lb,
+				     uint16_t abraking, uint16_t mid_throttle,
+
+				     uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,
+				     uint16_t x_ub1, uint16_t x_lb1, uint16_t vx_ub1,
+
+				     uint16_t y_ub2, uint16_t y_lb2, uint16_t vy_ub2,
+				     uint16_t x_ub2, uint16_t x_lb2, uint16_t vx_ub2,
+
+				     uint16_t y_ub3, uint16_t y_lb3, uint16_t vy_ub3,
+				     uint16_t x_ub3, uint16_t x_lb3, uint16_t vx_ub3,
+
+				     uint16_t y_ub4, uint16_t y_lb4, uint16_t vy_ub4,
+				     uint16_t x_ub4, uint16_t x_lb4, uint16_t vx_ub4) {
+
+
       mavlink_message_t msg;
       mavlink_msg_shim_params_pack(getSystemId(),
-        getComponentId(),
-        &msg,
-        smooth, lookahead, h_ub, h_lb,
-        hprime_ub, hprime_lb,
-        x_ub, x_lb,
-        xprime_ub, xprime_lb,
-        roll_lb, abraking,
-	mid_throttle
-      );
+				   getComponentId(),
+				   &msg,
+				   smooth, lookahead, roll_lb,
+				   abraking, mid_throttle,
+
+				   y_ub1, y_lb1, vy_ub1,
+				   x_ub1, x_lb1, vx_ub1,
+
+				   y_ub2, y_lb2, vy_ub2,
+				   x_ub2, x_lb2, vx_ub2,
+
+				   y_ub3, y_lb3, vy_ub3,
+				   x_ub3, x_lb3, vx_ub3,
+
+				   y_ub4, y_lb4, vy_ub4,
+				   x_ub4, x_lb4, vx_ub4
+				   );
+
       sendMessage(msg);
     }
 

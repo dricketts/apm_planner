@@ -12,39 +12,25 @@ typedef struct __mavlink_shim_stats_t
  float Theta_proposed; ///< The proposed angle
  float a; ///< The issued acceleration, normal to the quadcopter.
  float theta; ///< The issued angle
- float AX_proposed; ///< The proposed X acceleration.
- float AY_proposed; ///< The proposed Y acceleration.
- float ax; ///< The x acceleration.
- float ay; ///< The vertical acceleration.
- float amin_x; ///< The breaking acceleration for x.
- float amin_y; ///< The breaking acceleration for y.
  uint16_t throttle; ///< The proposed throttle received by the shim
- uint8_t something_weird; ///< 1 if something weird happened, 0 otherwise
+ uint8_t can_run1; ///< 1 if shim 1 can run, 0 otherwise
+ uint8_t can_run2; ///< 1 if shim 2 can run, 0 otherwise
+ uint8_t can_run3; ///< 1 if shim 3 can run, 0 otherwise
+ uint8_t can_run4; ///< 1 if shim 4 can run, 0 otherwise
  uint8_t angle_boost; ///< 1 if angle boost was requested, 0 otherwise
- uint8_t safe_x; ///< Whether or not the safety check passed for the X direction.
- uint8_t safe_y; ///< Whether or not the safety check passed for the Y direction.
- uint8_t safe_x_vel_ub; ///< Whether or not the safety check passed for the upper bound of velocity in the X direction.
- uint8_t safe_x_vel_lb; ///< Whether or not the safety check passed for the lower bound of velocity in the X direction.
- uint8_t safe_x_pos_ub; ///< Whether or not the safety check passed for the upper bound of position in the X direction.
- uint8_t safe_x_pos_lb; ///< Whether or not the safety check passed for the lower bound of position in the X direction.
- uint8_t safe_y_vel_ub; ///< Whether or not the safety check passed for the upper bound of velocity in the Y direction.
- uint8_t safe_y_vel_lb; ///< Whether or not the safety check passed for the lower bound of velocity in the Y direction.
- uint8_t safe_y_pos_ub; ///< Whether or not the safety check passed for the upper bound of position in the Y direction.
- uint8_t safe_y_pos_lb; ///< Whether or not the safety check passed for the lower bound of position in the Y direction.
- uint8_t Theta_proposed_bound_check; ///< Whether or not the safety check passed for the proposed angle.
 } mavlink_shim_stats_t;
 
-#define MAVLINK_MSG_ID_SHIM_STATS_LEN 71
-#define MAVLINK_MSG_ID_232_LEN 71
+#define MAVLINK_MSG_ID_SHIM_STATS_LEN 39
+#define MAVLINK_MSG_ID_232_LEN 39
 
-#define MAVLINK_MSG_ID_SHIM_STATS_CRC 88
-#define MAVLINK_MSG_ID_232_CRC 88
+#define MAVLINK_MSG_ID_SHIM_STATS_CRC 244
+#define MAVLINK_MSG_ID_232_CRC 244
 
 
 
 #define MAVLINK_MESSAGE_INFO_SHIM_STATS { \
 	"SHIM_STATS", \
-	28, \
+	14, \
 	{  { "x", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_shim_stats_t, x) }, \
          { "y", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_shim_stats_t, y) }, \
          { "vx", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_shim_stats_t, vx) }, \
@@ -53,26 +39,12 @@ typedef struct __mavlink_shim_stats_t
          { "Theta_proposed", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_shim_stats_t, Theta_proposed) }, \
          { "a", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_shim_stats_t, a) }, \
          { "theta", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_shim_stats_t, theta) }, \
-         { "AX_proposed", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_shim_stats_t, AX_proposed) }, \
-         { "AY_proposed", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_shim_stats_t, AY_proposed) }, \
-         { "ax", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_shim_stats_t, ax) }, \
-         { "ay", NULL, MAVLINK_TYPE_FLOAT, 0, 44, offsetof(mavlink_shim_stats_t, ay) }, \
-         { "amin_x", NULL, MAVLINK_TYPE_FLOAT, 0, 48, offsetof(mavlink_shim_stats_t, amin_x) }, \
-         { "amin_y", NULL, MAVLINK_TYPE_FLOAT, 0, 52, offsetof(mavlink_shim_stats_t, amin_y) }, \
-         { "throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 56, offsetof(mavlink_shim_stats_t, throttle) }, \
-         { "something_weird", NULL, MAVLINK_TYPE_UINT8_T, 0, 58, offsetof(mavlink_shim_stats_t, something_weird) }, \
-         { "angle_boost", NULL, MAVLINK_TYPE_UINT8_T, 0, 59, offsetof(mavlink_shim_stats_t, angle_boost) }, \
-         { "safe_x", NULL, MAVLINK_TYPE_UINT8_T, 0, 60, offsetof(mavlink_shim_stats_t, safe_x) }, \
-         { "safe_y", NULL, MAVLINK_TYPE_UINT8_T, 0, 61, offsetof(mavlink_shim_stats_t, safe_y) }, \
-         { "safe_x_vel_ub", NULL, MAVLINK_TYPE_UINT8_T, 0, 62, offsetof(mavlink_shim_stats_t, safe_x_vel_ub) }, \
-         { "safe_x_vel_lb", NULL, MAVLINK_TYPE_UINT8_T, 0, 63, offsetof(mavlink_shim_stats_t, safe_x_vel_lb) }, \
-         { "safe_x_pos_ub", NULL, MAVLINK_TYPE_UINT8_T, 0, 64, offsetof(mavlink_shim_stats_t, safe_x_pos_ub) }, \
-         { "safe_x_pos_lb", NULL, MAVLINK_TYPE_UINT8_T, 0, 65, offsetof(mavlink_shim_stats_t, safe_x_pos_lb) }, \
-         { "safe_y_vel_ub", NULL, MAVLINK_TYPE_UINT8_T, 0, 66, offsetof(mavlink_shim_stats_t, safe_y_vel_ub) }, \
-         { "safe_y_vel_lb", NULL, MAVLINK_TYPE_UINT8_T, 0, 67, offsetof(mavlink_shim_stats_t, safe_y_vel_lb) }, \
-         { "safe_y_pos_ub", NULL, MAVLINK_TYPE_UINT8_T, 0, 68, offsetof(mavlink_shim_stats_t, safe_y_pos_ub) }, \
-         { "safe_y_pos_lb", NULL, MAVLINK_TYPE_UINT8_T, 0, 69, offsetof(mavlink_shim_stats_t, safe_y_pos_lb) }, \
-         { "Theta_proposed_bound_check", NULL, MAVLINK_TYPE_UINT8_T, 0, 70, offsetof(mavlink_shim_stats_t, Theta_proposed_bound_check) }, \
+         { "throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 32, offsetof(mavlink_shim_stats_t, throttle) }, \
+         { "can_run1", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_shim_stats_t, can_run1) }, \
+         { "can_run2", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_shim_stats_t, can_run2) }, \
+         { "can_run3", NULL, MAVLINK_TYPE_UINT8_T, 0, 36, offsetof(mavlink_shim_stats_t, can_run3) }, \
+         { "can_run4", NULL, MAVLINK_TYPE_UINT8_T, 0, 37, offsetof(mavlink_shim_stats_t, can_run4) }, \
+         { "angle_boost", NULL, MAVLINK_TYPE_UINT8_T, 0, 38, offsetof(mavlink_shim_stats_t, angle_boost) }, \
          } \
 }
 
@@ -83,7 +55,10 @@ typedef struct __mavlink_shim_stats_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param something_weird 1 if something weird happened, 0 otherwise
+ * @param can_run1 1 if shim 1 can run, 0 otherwise
+ * @param can_run2 1 if shim 2 can run, 0 otherwise
+ * @param can_run3 1 if shim 3 can run, 0 otherwise
+ * @param can_run4 1 if shim 4 can run, 0 otherwise
  * @param x The value of x, relative to starting position.
  * @param y The height, relative to starting position.
  * @param vx The velocity in the x direction.
@@ -94,27 +69,10 @@ typedef struct __mavlink_shim_stats_t
  * @param Theta_proposed The proposed angle
  * @param a The issued acceleration, normal to the quadcopter.
  * @param theta The issued angle
- * @param AX_proposed The proposed X acceleration.
- * @param AY_proposed The proposed Y acceleration.
- * @param ax The x acceleration.
- * @param ay The vertical acceleration.
- * @param amin_x The breaking acceleration for x.
- * @param amin_y The breaking acceleration for y.
- * @param safe_x Whether or not the safety check passed for the X direction.
- * @param safe_y Whether or not the safety check passed for the Y direction.
- * @param safe_x_vel_ub Whether or not the safety check passed for the upper bound of velocity in the X direction.
- * @param safe_x_vel_lb Whether or not the safety check passed for the lower bound of velocity in the X direction.
- * @param safe_x_pos_ub Whether or not the safety check passed for the upper bound of position in the X direction.
- * @param safe_x_pos_lb Whether or not the safety check passed for the lower bound of position in the X direction.
- * @param safe_y_vel_ub Whether or not the safety check passed for the upper bound of velocity in the Y direction.
- * @param safe_y_vel_lb Whether or not the safety check passed for the lower bound of velocity in the Y direction.
- * @param safe_y_pos_ub Whether or not the safety check passed for the upper bound of position in the Y direction.
- * @param safe_y_pos_lb Whether or not the safety check passed for the lower bound of position in the Y direction.
- * @param Theta_proposed_bound_check Whether or not the safety check passed for the proposed angle.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_stats_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t something_weird, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta, float AX_proposed, float AY_proposed, float ax, float ay, float amin_x, float amin_y, uint8_t safe_x, uint8_t safe_y, uint8_t safe_x_vel_ub, uint8_t safe_x_vel_lb, uint8_t safe_x_pos_ub, uint8_t safe_x_pos_lb, uint8_t safe_y_vel_ub, uint8_t safe_y_vel_lb, uint8_t safe_y_pos_ub, uint8_t safe_y_pos_lb, uint8_t Theta_proposed_bound_check)
+						       uint8_t can_run1, uint8_t can_run2, uint8_t can_run3, uint8_t can_run4, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_STATS_LEN];
@@ -126,26 +84,12 @@ static inline uint16_t mavlink_msg_shim_stats_pack(uint8_t system_id, uint8_t co
 	_mav_put_float(buf, 20, Theta_proposed);
 	_mav_put_float(buf, 24, a);
 	_mav_put_float(buf, 28, theta);
-	_mav_put_float(buf, 32, AX_proposed);
-	_mav_put_float(buf, 36, AY_proposed);
-	_mav_put_float(buf, 40, ax);
-	_mav_put_float(buf, 44, ay);
-	_mav_put_float(buf, 48, amin_x);
-	_mav_put_float(buf, 52, amin_y);
-	_mav_put_uint16_t(buf, 56, throttle);
-	_mav_put_uint8_t(buf, 58, something_weird);
-	_mav_put_uint8_t(buf, 59, angle_boost);
-	_mav_put_uint8_t(buf, 60, safe_x);
-	_mav_put_uint8_t(buf, 61, safe_y);
-	_mav_put_uint8_t(buf, 62, safe_x_vel_ub);
-	_mav_put_uint8_t(buf, 63, safe_x_vel_lb);
-	_mav_put_uint8_t(buf, 64, safe_x_pos_ub);
-	_mav_put_uint8_t(buf, 65, safe_x_pos_lb);
-	_mav_put_uint8_t(buf, 66, safe_y_vel_ub);
-	_mav_put_uint8_t(buf, 67, safe_y_vel_lb);
-	_mav_put_uint8_t(buf, 68, safe_y_pos_ub);
-	_mav_put_uint8_t(buf, 69, safe_y_pos_lb);
-	_mav_put_uint8_t(buf, 70, Theta_proposed_bound_check);
+	_mav_put_uint16_t(buf, 32, throttle);
+	_mav_put_uint8_t(buf, 34, can_run1);
+	_mav_put_uint8_t(buf, 35, can_run2);
+	_mav_put_uint8_t(buf, 36, can_run3);
+	_mav_put_uint8_t(buf, 37, can_run4);
+	_mav_put_uint8_t(buf, 38, angle_boost);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_STATS_LEN);
 #else
@@ -158,26 +102,12 @@ static inline uint16_t mavlink_msg_shim_stats_pack(uint8_t system_id, uint8_t co
 	packet.Theta_proposed = Theta_proposed;
 	packet.a = a;
 	packet.theta = theta;
-	packet.AX_proposed = AX_proposed;
-	packet.AY_proposed = AY_proposed;
-	packet.ax = ax;
-	packet.ay = ay;
-	packet.amin_x = amin_x;
-	packet.amin_y = amin_y;
 	packet.throttle = throttle;
-	packet.something_weird = something_weird;
+	packet.can_run1 = can_run1;
+	packet.can_run2 = can_run2;
+	packet.can_run3 = can_run3;
+	packet.can_run4 = can_run4;
 	packet.angle_boost = angle_boost;
-	packet.safe_x = safe_x;
-	packet.safe_y = safe_y;
-	packet.safe_x_vel_ub = safe_x_vel_ub;
-	packet.safe_x_vel_lb = safe_x_vel_lb;
-	packet.safe_x_pos_ub = safe_x_pos_ub;
-	packet.safe_x_pos_lb = safe_x_pos_lb;
-	packet.safe_y_vel_ub = safe_y_vel_ub;
-	packet.safe_y_vel_lb = safe_y_vel_lb;
-	packet.safe_y_pos_ub = safe_y_pos_ub;
-	packet.safe_y_pos_lb = safe_y_pos_lb;
-	packet.Theta_proposed_bound_check = Theta_proposed_bound_check;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SHIM_STATS_LEN);
 #endif
@@ -196,7 +126,10 @@ static inline uint16_t mavlink_msg_shim_stats_pack(uint8_t system_id, uint8_t co
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param something_weird 1 if something weird happened, 0 otherwise
+ * @param can_run1 1 if shim 1 can run, 0 otherwise
+ * @param can_run2 1 if shim 2 can run, 0 otherwise
+ * @param can_run3 1 if shim 3 can run, 0 otherwise
+ * @param can_run4 1 if shim 4 can run, 0 otherwise
  * @param x The value of x, relative to starting position.
  * @param y The height, relative to starting position.
  * @param vx The velocity in the x direction.
@@ -207,28 +140,11 @@ static inline uint16_t mavlink_msg_shim_stats_pack(uint8_t system_id, uint8_t co
  * @param Theta_proposed The proposed angle
  * @param a The issued acceleration, normal to the quadcopter.
  * @param theta The issued angle
- * @param AX_proposed The proposed X acceleration.
- * @param AY_proposed The proposed Y acceleration.
- * @param ax The x acceleration.
- * @param ay The vertical acceleration.
- * @param amin_x The breaking acceleration for x.
- * @param amin_y The breaking acceleration for y.
- * @param safe_x Whether or not the safety check passed for the X direction.
- * @param safe_y Whether or not the safety check passed for the Y direction.
- * @param safe_x_vel_ub Whether or not the safety check passed for the upper bound of velocity in the X direction.
- * @param safe_x_vel_lb Whether or not the safety check passed for the lower bound of velocity in the X direction.
- * @param safe_x_pos_ub Whether or not the safety check passed for the upper bound of position in the X direction.
- * @param safe_x_pos_lb Whether or not the safety check passed for the lower bound of position in the X direction.
- * @param safe_y_vel_ub Whether or not the safety check passed for the upper bound of velocity in the Y direction.
- * @param safe_y_vel_lb Whether or not the safety check passed for the lower bound of velocity in the Y direction.
- * @param safe_y_pos_ub Whether or not the safety check passed for the upper bound of position in the Y direction.
- * @param safe_y_pos_lb Whether or not the safety check passed for the lower bound of position in the Y direction.
- * @param Theta_proposed_bound_check Whether or not the safety check passed for the proposed angle.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_stats_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t something_weird,float x,float y,float vx,float vy,uint16_t throttle,uint8_t angle_boost,float A_proposed,float Theta_proposed,float a,float theta,float AX_proposed,float AY_proposed,float ax,float ay,float amin_x,float amin_y,uint8_t safe_x,uint8_t safe_y,uint8_t safe_x_vel_ub,uint8_t safe_x_vel_lb,uint8_t safe_x_pos_ub,uint8_t safe_x_pos_lb,uint8_t safe_y_vel_ub,uint8_t safe_y_vel_lb,uint8_t safe_y_pos_ub,uint8_t safe_y_pos_lb,uint8_t Theta_proposed_bound_check)
+						           uint8_t can_run1,uint8_t can_run2,uint8_t can_run3,uint8_t can_run4,float x,float y,float vx,float vy,uint16_t throttle,uint8_t angle_boost,float A_proposed,float Theta_proposed,float a,float theta)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_STATS_LEN];
@@ -240,26 +156,12 @@ static inline uint16_t mavlink_msg_shim_stats_pack_chan(uint8_t system_id, uint8
 	_mav_put_float(buf, 20, Theta_proposed);
 	_mav_put_float(buf, 24, a);
 	_mav_put_float(buf, 28, theta);
-	_mav_put_float(buf, 32, AX_proposed);
-	_mav_put_float(buf, 36, AY_proposed);
-	_mav_put_float(buf, 40, ax);
-	_mav_put_float(buf, 44, ay);
-	_mav_put_float(buf, 48, amin_x);
-	_mav_put_float(buf, 52, amin_y);
-	_mav_put_uint16_t(buf, 56, throttle);
-	_mav_put_uint8_t(buf, 58, something_weird);
-	_mav_put_uint8_t(buf, 59, angle_boost);
-	_mav_put_uint8_t(buf, 60, safe_x);
-	_mav_put_uint8_t(buf, 61, safe_y);
-	_mav_put_uint8_t(buf, 62, safe_x_vel_ub);
-	_mav_put_uint8_t(buf, 63, safe_x_vel_lb);
-	_mav_put_uint8_t(buf, 64, safe_x_pos_ub);
-	_mav_put_uint8_t(buf, 65, safe_x_pos_lb);
-	_mav_put_uint8_t(buf, 66, safe_y_vel_ub);
-	_mav_put_uint8_t(buf, 67, safe_y_vel_lb);
-	_mav_put_uint8_t(buf, 68, safe_y_pos_ub);
-	_mav_put_uint8_t(buf, 69, safe_y_pos_lb);
-	_mav_put_uint8_t(buf, 70, Theta_proposed_bound_check);
+	_mav_put_uint16_t(buf, 32, throttle);
+	_mav_put_uint8_t(buf, 34, can_run1);
+	_mav_put_uint8_t(buf, 35, can_run2);
+	_mav_put_uint8_t(buf, 36, can_run3);
+	_mav_put_uint8_t(buf, 37, can_run4);
+	_mav_put_uint8_t(buf, 38, angle_boost);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_STATS_LEN);
 #else
@@ -272,26 +174,12 @@ static inline uint16_t mavlink_msg_shim_stats_pack_chan(uint8_t system_id, uint8
 	packet.Theta_proposed = Theta_proposed;
 	packet.a = a;
 	packet.theta = theta;
-	packet.AX_proposed = AX_proposed;
-	packet.AY_proposed = AY_proposed;
-	packet.ax = ax;
-	packet.ay = ay;
-	packet.amin_x = amin_x;
-	packet.amin_y = amin_y;
 	packet.throttle = throttle;
-	packet.something_weird = something_weird;
+	packet.can_run1 = can_run1;
+	packet.can_run2 = can_run2;
+	packet.can_run3 = can_run3;
+	packet.can_run4 = can_run4;
 	packet.angle_boost = angle_boost;
-	packet.safe_x = safe_x;
-	packet.safe_y = safe_y;
-	packet.safe_x_vel_ub = safe_x_vel_ub;
-	packet.safe_x_vel_lb = safe_x_vel_lb;
-	packet.safe_x_pos_ub = safe_x_pos_ub;
-	packet.safe_x_pos_lb = safe_x_pos_lb;
-	packet.safe_y_vel_ub = safe_y_vel_ub;
-	packet.safe_y_vel_lb = safe_y_vel_lb;
-	packet.safe_y_pos_ub = safe_y_pos_ub;
-	packet.safe_y_pos_lb = safe_y_pos_lb;
-	packet.Theta_proposed_bound_check = Theta_proposed_bound_check;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SHIM_STATS_LEN);
 #endif
@@ -314,7 +202,7 @@ static inline uint16_t mavlink_msg_shim_stats_pack_chan(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_shim_stats_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_shim_stats_t* shim_stats)
 {
-	return mavlink_msg_shim_stats_pack(system_id, component_id, msg, shim_stats->something_weird, shim_stats->x, shim_stats->y, shim_stats->vx, shim_stats->vy, shim_stats->throttle, shim_stats->angle_boost, shim_stats->A_proposed, shim_stats->Theta_proposed, shim_stats->a, shim_stats->theta, shim_stats->AX_proposed, shim_stats->AY_proposed, shim_stats->ax, shim_stats->ay, shim_stats->amin_x, shim_stats->amin_y, shim_stats->safe_x, shim_stats->safe_y, shim_stats->safe_x_vel_ub, shim_stats->safe_x_vel_lb, shim_stats->safe_x_pos_ub, shim_stats->safe_x_pos_lb, shim_stats->safe_y_vel_ub, shim_stats->safe_y_vel_lb, shim_stats->safe_y_pos_ub, shim_stats->safe_y_pos_lb, shim_stats->Theta_proposed_bound_check);
+	return mavlink_msg_shim_stats_pack(system_id, component_id, msg, shim_stats->can_run1, shim_stats->can_run2, shim_stats->can_run3, shim_stats->can_run4, shim_stats->x, shim_stats->y, shim_stats->vx, shim_stats->vy, shim_stats->throttle, shim_stats->angle_boost, shim_stats->A_proposed, shim_stats->Theta_proposed, shim_stats->a, shim_stats->theta);
 }
 
 /**
@@ -328,14 +216,17 @@ static inline uint16_t mavlink_msg_shim_stats_encode(uint8_t system_id, uint8_t 
  */
 static inline uint16_t mavlink_msg_shim_stats_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_shim_stats_t* shim_stats)
 {
-	return mavlink_msg_shim_stats_pack_chan(system_id, component_id, chan, msg, shim_stats->something_weird, shim_stats->x, shim_stats->y, shim_stats->vx, shim_stats->vy, shim_stats->throttle, shim_stats->angle_boost, shim_stats->A_proposed, shim_stats->Theta_proposed, shim_stats->a, shim_stats->theta, shim_stats->AX_proposed, shim_stats->AY_proposed, shim_stats->ax, shim_stats->ay, shim_stats->amin_x, shim_stats->amin_y, shim_stats->safe_x, shim_stats->safe_y, shim_stats->safe_x_vel_ub, shim_stats->safe_x_vel_lb, shim_stats->safe_x_pos_ub, shim_stats->safe_x_pos_lb, shim_stats->safe_y_vel_ub, shim_stats->safe_y_vel_lb, shim_stats->safe_y_pos_ub, shim_stats->safe_y_pos_lb, shim_stats->Theta_proposed_bound_check);
+	return mavlink_msg_shim_stats_pack_chan(system_id, component_id, chan, msg, shim_stats->can_run1, shim_stats->can_run2, shim_stats->can_run3, shim_stats->can_run4, shim_stats->x, shim_stats->y, shim_stats->vx, shim_stats->vy, shim_stats->throttle, shim_stats->angle_boost, shim_stats->A_proposed, shim_stats->Theta_proposed, shim_stats->a, shim_stats->theta);
 }
 
 /**
  * @brief Send a shim_stats message
  * @param chan MAVLink channel to send the message
  *
- * @param something_weird 1 if something weird happened, 0 otherwise
+ * @param can_run1 1 if shim 1 can run, 0 otherwise
+ * @param can_run2 1 if shim 2 can run, 0 otherwise
+ * @param can_run3 1 if shim 3 can run, 0 otherwise
+ * @param can_run4 1 if shim 4 can run, 0 otherwise
  * @param x The value of x, relative to starting position.
  * @param y The height, relative to starting position.
  * @param vx The velocity in the x direction.
@@ -346,27 +237,10 @@ static inline uint16_t mavlink_msg_shim_stats_encode_chan(uint8_t system_id, uin
  * @param Theta_proposed The proposed angle
  * @param a The issued acceleration, normal to the quadcopter.
  * @param theta The issued angle
- * @param AX_proposed The proposed X acceleration.
- * @param AY_proposed The proposed Y acceleration.
- * @param ax The x acceleration.
- * @param ay The vertical acceleration.
- * @param amin_x The breaking acceleration for x.
- * @param amin_y The breaking acceleration for y.
- * @param safe_x Whether or not the safety check passed for the X direction.
- * @param safe_y Whether or not the safety check passed for the Y direction.
- * @param safe_x_vel_ub Whether or not the safety check passed for the upper bound of velocity in the X direction.
- * @param safe_x_vel_lb Whether or not the safety check passed for the lower bound of velocity in the X direction.
- * @param safe_x_pos_ub Whether or not the safety check passed for the upper bound of position in the X direction.
- * @param safe_x_pos_lb Whether or not the safety check passed for the lower bound of position in the X direction.
- * @param safe_y_vel_ub Whether or not the safety check passed for the upper bound of velocity in the Y direction.
- * @param safe_y_vel_lb Whether or not the safety check passed for the lower bound of velocity in the Y direction.
- * @param safe_y_pos_ub Whether or not the safety check passed for the upper bound of position in the Y direction.
- * @param safe_y_pos_lb Whether or not the safety check passed for the lower bound of position in the Y direction.
- * @param Theta_proposed_bound_check Whether or not the safety check passed for the proposed angle.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_shim_stats_send(mavlink_channel_t chan, uint8_t something_weird, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta, float AX_proposed, float AY_proposed, float ax, float ay, float amin_x, float amin_y, uint8_t safe_x, uint8_t safe_y, uint8_t safe_x_vel_ub, uint8_t safe_x_vel_lb, uint8_t safe_x_pos_ub, uint8_t safe_x_pos_lb, uint8_t safe_y_vel_ub, uint8_t safe_y_vel_lb, uint8_t safe_y_pos_ub, uint8_t safe_y_pos_lb, uint8_t Theta_proposed_bound_check)
+static inline void mavlink_msg_shim_stats_send(mavlink_channel_t chan, uint8_t can_run1, uint8_t can_run2, uint8_t can_run3, uint8_t can_run4, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_STATS_LEN];
@@ -378,26 +252,12 @@ static inline void mavlink_msg_shim_stats_send(mavlink_channel_t chan, uint8_t s
 	_mav_put_float(buf, 20, Theta_proposed);
 	_mav_put_float(buf, 24, a);
 	_mav_put_float(buf, 28, theta);
-	_mav_put_float(buf, 32, AX_proposed);
-	_mav_put_float(buf, 36, AY_proposed);
-	_mav_put_float(buf, 40, ax);
-	_mav_put_float(buf, 44, ay);
-	_mav_put_float(buf, 48, amin_x);
-	_mav_put_float(buf, 52, amin_y);
-	_mav_put_uint16_t(buf, 56, throttle);
-	_mav_put_uint8_t(buf, 58, something_weird);
-	_mav_put_uint8_t(buf, 59, angle_boost);
-	_mav_put_uint8_t(buf, 60, safe_x);
-	_mav_put_uint8_t(buf, 61, safe_y);
-	_mav_put_uint8_t(buf, 62, safe_x_vel_ub);
-	_mav_put_uint8_t(buf, 63, safe_x_vel_lb);
-	_mav_put_uint8_t(buf, 64, safe_x_pos_ub);
-	_mav_put_uint8_t(buf, 65, safe_x_pos_lb);
-	_mav_put_uint8_t(buf, 66, safe_y_vel_ub);
-	_mav_put_uint8_t(buf, 67, safe_y_vel_lb);
-	_mav_put_uint8_t(buf, 68, safe_y_pos_ub);
-	_mav_put_uint8_t(buf, 69, safe_y_pos_lb);
-	_mav_put_uint8_t(buf, 70, Theta_proposed_bound_check);
+	_mav_put_uint16_t(buf, 32, throttle);
+	_mav_put_uint8_t(buf, 34, can_run1);
+	_mav_put_uint8_t(buf, 35, can_run2);
+	_mav_put_uint8_t(buf, 36, can_run3);
+	_mav_put_uint8_t(buf, 37, can_run4);
+	_mav_put_uint8_t(buf, 38, angle_boost);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_STATS, buf, MAVLINK_MSG_ID_SHIM_STATS_LEN, MAVLINK_MSG_ID_SHIM_STATS_CRC);
@@ -414,26 +274,12 @@ static inline void mavlink_msg_shim_stats_send(mavlink_channel_t chan, uint8_t s
 	packet.Theta_proposed = Theta_proposed;
 	packet.a = a;
 	packet.theta = theta;
-	packet.AX_proposed = AX_proposed;
-	packet.AY_proposed = AY_proposed;
-	packet.ax = ax;
-	packet.ay = ay;
-	packet.amin_x = amin_x;
-	packet.amin_y = amin_y;
 	packet.throttle = throttle;
-	packet.something_weird = something_weird;
+	packet.can_run1 = can_run1;
+	packet.can_run2 = can_run2;
+	packet.can_run3 = can_run3;
+	packet.can_run4 = can_run4;
 	packet.angle_boost = angle_boost;
-	packet.safe_x = safe_x;
-	packet.safe_y = safe_y;
-	packet.safe_x_vel_ub = safe_x_vel_ub;
-	packet.safe_x_vel_lb = safe_x_vel_lb;
-	packet.safe_x_pos_ub = safe_x_pos_ub;
-	packet.safe_x_pos_lb = safe_x_pos_lb;
-	packet.safe_y_vel_ub = safe_y_vel_ub;
-	packet.safe_y_vel_lb = safe_y_vel_lb;
-	packet.safe_y_pos_ub = safe_y_pos_ub;
-	packet.safe_y_pos_lb = safe_y_pos_lb;
-	packet.Theta_proposed_bound_check = Theta_proposed_bound_check;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_STATS, (const char *)&packet, MAVLINK_MSG_ID_SHIM_STATS_LEN, MAVLINK_MSG_ID_SHIM_STATS_CRC);
@@ -451,7 +297,7 @@ static inline void mavlink_msg_shim_stats_send(mavlink_channel_t chan, uint8_t s
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_shim_stats_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t something_weird, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta, float AX_proposed, float AY_proposed, float ax, float ay, float amin_x, float amin_y, uint8_t safe_x, uint8_t safe_y, uint8_t safe_x_vel_ub, uint8_t safe_x_vel_lb, uint8_t safe_x_pos_ub, uint8_t safe_x_pos_lb, uint8_t safe_y_vel_ub, uint8_t safe_y_vel_lb, uint8_t safe_y_pos_ub, uint8_t safe_y_pos_lb, uint8_t Theta_proposed_bound_check)
+static inline void mavlink_msg_shim_stats_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t can_run1, uint8_t can_run2, uint8_t can_run3, uint8_t can_run4, float x, float y, float vx, float vy, uint16_t throttle, uint8_t angle_boost, float A_proposed, float Theta_proposed, float a, float theta)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -463,26 +309,12 @@ static inline void mavlink_msg_shim_stats_send_buf(mavlink_message_t *msgbuf, ma
 	_mav_put_float(buf, 20, Theta_proposed);
 	_mav_put_float(buf, 24, a);
 	_mav_put_float(buf, 28, theta);
-	_mav_put_float(buf, 32, AX_proposed);
-	_mav_put_float(buf, 36, AY_proposed);
-	_mav_put_float(buf, 40, ax);
-	_mav_put_float(buf, 44, ay);
-	_mav_put_float(buf, 48, amin_x);
-	_mav_put_float(buf, 52, amin_y);
-	_mav_put_uint16_t(buf, 56, throttle);
-	_mav_put_uint8_t(buf, 58, something_weird);
-	_mav_put_uint8_t(buf, 59, angle_boost);
-	_mav_put_uint8_t(buf, 60, safe_x);
-	_mav_put_uint8_t(buf, 61, safe_y);
-	_mav_put_uint8_t(buf, 62, safe_x_vel_ub);
-	_mav_put_uint8_t(buf, 63, safe_x_vel_lb);
-	_mav_put_uint8_t(buf, 64, safe_x_pos_ub);
-	_mav_put_uint8_t(buf, 65, safe_x_pos_lb);
-	_mav_put_uint8_t(buf, 66, safe_y_vel_ub);
-	_mav_put_uint8_t(buf, 67, safe_y_vel_lb);
-	_mav_put_uint8_t(buf, 68, safe_y_pos_ub);
-	_mav_put_uint8_t(buf, 69, safe_y_pos_lb);
-	_mav_put_uint8_t(buf, 70, Theta_proposed_bound_check);
+	_mav_put_uint16_t(buf, 32, throttle);
+	_mav_put_uint8_t(buf, 34, can_run1);
+	_mav_put_uint8_t(buf, 35, can_run2);
+	_mav_put_uint8_t(buf, 36, can_run3);
+	_mav_put_uint8_t(buf, 37, can_run4);
+	_mav_put_uint8_t(buf, 38, angle_boost);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_STATS, buf, MAVLINK_MSG_ID_SHIM_STATS_LEN, MAVLINK_MSG_ID_SHIM_STATS_CRC);
@@ -499,26 +331,12 @@ static inline void mavlink_msg_shim_stats_send_buf(mavlink_message_t *msgbuf, ma
 	packet->Theta_proposed = Theta_proposed;
 	packet->a = a;
 	packet->theta = theta;
-	packet->AX_proposed = AX_proposed;
-	packet->AY_proposed = AY_proposed;
-	packet->ax = ax;
-	packet->ay = ay;
-	packet->amin_x = amin_x;
-	packet->amin_y = amin_y;
 	packet->throttle = throttle;
-	packet->something_weird = something_weird;
+	packet->can_run1 = can_run1;
+	packet->can_run2 = can_run2;
+	packet->can_run3 = can_run3;
+	packet->can_run4 = can_run4;
 	packet->angle_boost = angle_boost;
-	packet->safe_x = safe_x;
-	packet->safe_y = safe_y;
-	packet->safe_x_vel_ub = safe_x_vel_ub;
-	packet->safe_x_vel_lb = safe_x_vel_lb;
-	packet->safe_x_pos_ub = safe_x_pos_ub;
-	packet->safe_x_pos_lb = safe_x_pos_lb;
-	packet->safe_y_vel_ub = safe_y_vel_ub;
-	packet->safe_y_vel_lb = safe_y_vel_lb;
-	packet->safe_y_pos_ub = safe_y_pos_ub;
-	packet->safe_y_pos_lb = safe_y_pos_lb;
-	packet->Theta_proposed_bound_check = Theta_proposed_bound_check;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_STATS, (const char *)packet, MAVLINK_MSG_ID_SHIM_STATS_LEN, MAVLINK_MSG_ID_SHIM_STATS_CRC);
@@ -535,13 +353,43 @@ static inline void mavlink_msg_shim_stats_send_buf(mavlink_message_t *msgbuf, ma
 
 
 /**
- * @brief Get field something_weird from shim_stats message
+ * @brief Get field can_run1 from shim_stats message
  *
- * @return 1 if something weird happened, 0 otherwise
+ * @return 1 if shim 1 can run, 0 otherwise
  */
-static inline uint8_t mavlink_msg_shim_stats_get_something_weird(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_shim_stats_get_can_run1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  58);
+	return _MAV_RETURN_uint8_t(msg,  34);
+}
+
+/**
+ * @brief Get field can_run2 from shim_stats message
+ *
+ * @return 1 if shim 2 can run, 0 otherwise
+ */
+static inline uint8_t mavlink_msg_shim_stats_get_can_run2(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  35);
+}
+
+/**
+ * @brief Get field can_run3 from shim_stats message
+ *
+ * @return 1 if shim 3 can run, 0 otherwise
+ */
+static inline uint8_t mavlink_msg_shim_stats_get_can_run3(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  36);
+}
+
+/**
+ * @brief Get field can_run4 from shim_stats message
+ *
+ * @return 1 if shim 4 can run, 0 otherwise
+ */
+static inline uint8_t mavlink_msg_shim_stats_get_can_run4(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  37);
 }
 
 /**
@@ -591,7 +439,7 @@ static inline float mavlink_msg_shim_stats_get_vy(const mavlink_message_t* msg)
  */
 static inline uint16_t mavlink_msg_shim_stats_get_throttle(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint16_t(msg,  56);
+	return _MAV_RETURN_uint16_t(msg,  32);
 }
 
 /**
@@ -601,7 +449,7 @@ static inline uint16_t mavlink_msg_shim_stats_get_throttle(const mavlink_message
  */
 static inline uint8_t mavlink_msg_shim_stats_get_angle_boost(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  59);
+	return _MAV_RETURN_uint8_t(msg,  38);
 }
 
 /**
@@ -645,176 +493,6 @@ static inline float mavlink_msg_shim_stats_get_theta(const mavlink_message_t* ms
 }
 
 /**
- * @brief Get field AX_proposed from shim_stats message
- *
- * @return The proposed X acceleration.
- */
-static inline float mavlink_msg_shim_stats_get_AX_proposed(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  32);
-}
-
-/**
- * @brief Get field AY_proposed from shim_stats message
- *
- * @return The proposed Y acceleration.
- */
-static inline float mavlink_msg_shim_stats_get_AY_proposed(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  36);
-}
-
-/**
- * @brief Get field ax from shim_stats message
- *
- * @return The x acceleration.
- */
-static inline float mavlink_msg_shim_stats_get_ax(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  40);
-}
-
-/**
- * @brief Get field ay from shim_stats message
- *
- * @return The vertical acceleration.
- */
-static inline float mavlink_msg_shim_stats_get_ay(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  44);
-}
-
-/**
- * @brief Get field amin_x from shim_stats message
- *
- * @return The breaking acceleration for x.
- */
-static inline float mavlink_msg_shim_stats_get_amin_x(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  48);
-}
-
-/**
- * @brief Get field amin_y from shim_stats message
- *
- * @return The breaking acceleration for y.
- */
-static inline float mavlink_msg_shim_stats_get_amin_y(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  52);
-}
-
-/**
- * @brief Get field safe_x from shim_stats message
- *
- * @return Whether or not the safety check passed for the X direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_x(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  60);
-}
-
-/**
- * @brief Get field safe_y from shim_stats message
- *
- * @return Whether or not the safety check passed for the Y direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_y(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  61);
-}
-
-/**
- * @brief Get field safe_x_vel_ub from shim_stats message
- *
- * @return Whether or not the safety check passed for the upper bound of velocity in the X direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_x_vel_ub(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  62);
-}
-
-/**
- * @brief Get field safe_x_vel_lb from shim_stats message
- *
- * @return Whether or not the safety check passed for the lower bound of velocity in the X direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_x_vel_lb(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  63);
-}
-
-/**
- * @brief Get field safe_x_pos_ub from shim_stats message
- *
- * @return Whether or not the safety check passed for the upper bound of position in the X direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_x_pos_ub(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  64);
-}
-
-/**
- * @brief Get field safe_x_pos_lb from shim_stats message
- *
- * @return Whether or not the safety check passed for the lower bound of position in the X direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_x_pos_lb(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  65);
-}
-
-/**
- * @brief Get field safe_y_vel_ub from shim_stats message
- *
- * @return Whether or not the safety check passed for the upper bound of velocity in the Y direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_y_vel_ub(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  66);
-}
-
-/**
- * @brief Get field safe_y_vel_lb from shim_stats message
- *
- * @return Whether or not the safety check passed for the lower bound of velocity in the Y direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_y_vel_lb(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  67);
-}
-
-/**
- * @brief Get field safe_y_pos_ub from shim_stats message
- *
- * @return Whether or not the safety check passed for the upper bound of position in the Y direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_y_pos_ub(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  68);
-}
-
-/**
- * @brief Get field safe_y_pos_lb from shim_stats message
- *
- * @return Whether or not the safety check passed for the lower bound of position in the Y direction.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_safe_y_pos_lb(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  69);
-}
-
-/**
- * @brief Get field Theta_proposed_bound_check from shim_stats message
- *
- * @return Whether or not the safety check passed for the proposed angle.
- */
-static inline uint8_t mavlink_msg_shim_stats_get_Theta_proposed_bound_check(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint8_t(msg,  70);
-}
-
-/**
  * @brief Decode a shim_stats message into a struct
  *
  * @param msg The message to decode
@@ -831,26 +509,12 @@ static inline void mavlink_msg_shim_stats_decode(const mavlink_message_t* msg, m
 	shim_stats->Theta_proposed = mavlink_msg_shim_stats_get_Theta_proposed(msg);
 	shim_stats->a = mavlink_msg_shim_stats_get_a(msg);
 	shim_stats->theta = mavlink_msg_shim_stats_get_theta(msg);
-	shim_stats->AX_proposed = mavlink_msg_shim_stats_get_AX_proposed(msg);
-	shim_stats->AY_proposed = mavlink_msg_shim_stats_get_AY_proposed(msg);
-	shim_stats->ax = mavlink_msg_shim_stats_get_ax(msg);
-	shim_stats->ay = mavlink_msg_shim_stats_get_ay(msg);
-	shim_stats->amin_x = mavlink_msg_shim_stats_get_amin_x(msg);
-	shim_stats->amin_y = mavlink_msg_shim_stats_get_amin_y(msg);
 	shim_stats->throttle = mavlink_msg_shim_stats_get_throttle(msg);
-	shim_stats->something_weird = mavlink_msg_shim_stats_get_something_weird(msg);
+	shim_stats->can_run1 = mavlink_msg_shim_stats_get_can_run1(msg);
+	shim_stats->can_run2 = mavlink_msg_shim_stats_get_can_run2(msg);
+	shim_stats->can_run3 = mavlink_msg_shim_stats_get_can_run3(msg);
+	shim_stats->can_run4 = mavlink_msg_shim_stats_get_can_run4(msg);
 	shim_stats->angle_boost = mavlink_msg_shim_stats_get_angle_boost(msg);
-	shim_stats->safe_x = mavlink_msg_shim_stats_get_safe_x(msg);
-	shim_stats->safe_y = mavlink_msg_shim_stats_get_safe_y(msg);
-	shim_stats->safe_x_vel_ub = mavlink_msg_shim_stats_get_safe_x_vel_ub(msg);
-	shim_stats->safe_x_vel_lb = mavlink_msg_shim_stats_get_safe_x_vel_lb(msg);
-	shim_stats->safe_x_pos_ub = mavlink_msg_shim_stats_get_safe_x_pos_ub(msg);
-	shim_stats->safe_x_pos_lb = mavlink_msg_shim_stats_get_safe_x_pos_lb(msg);
-	shim_stats->safe_y_vel_ub = mavlink_msg_shim_stats_get_safe_y_vel_ub(msg);
-	shim_stats->safe_y_vel_lb = mavlink_msg_shim_stats_get_safe_y_vel_lb(msg);
-	shim_stats->safe_y_pos_ub = mavlink_msg_shim_stats_get_safe_y_pos_ub(msg);
-	shim_stats->safe_y_pos_lb = mavlink_msg_shim_stats_get_safe_y_pos_lb(msg);
-	shim_stats->Theta_proposed_bound_check = mavlink_msg_shim_stats_get_Theta_proposed_bound_check(msg);
 #else
 	memcpy(shim_stats, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_SHIM_STATS_LEN);
 #endif

@@ -448,13 +448,6 @@ protected:
 signals:
     /** @brief the shim status has changed */
     void shimStatusChanged(bool enabled);
-    /** @brief Display shim params sent from the vehicle, we don't use this anymore though */
-    void broadcastShimParams(bool smooth, float lookahead, float h_ub, float h_lb,
-      float hprime_ub, float hprime_lb,
-      float x_ub, float x_lb,
-      float xprime_ub, float xprime_lb,
-      float roll_lb, float abraking,
-      float mid_throttle);
     /** @brief The robot state has changed */
     void statusChanged(int stateFlag);
     /** @brief A new component was detected or created */

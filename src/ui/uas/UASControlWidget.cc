@@ -34,6 +34,8 @@ This file is part of the PIXHAWK project
 #include <QTimer>
 #include <QLabel>
 #include <QFileDialog>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include <QProcess>
 #include <QPalette>
@@ -254,24 +256,134 @@ void UASControlWidget::transmitMode()
 // update our shim parameters
 void UASControlWidget::updateShimParams()
 {
-     UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
-     if (mav)
-     {
-       mav->setShimParams(
-        ui.smoothIn->isChecked(),
-	(float)ui.lookaheadIn->value(),
-        (float)ui.h_ubIn->value(),
-			  (float)ui.h_lbIn->value(),
-			  (float)ui.hprime_ubIn->value(),
-			  (float)ui.hprime_lbIn->value(),
-			  (float)ui.x_ubIn->value(),
-        (float)ui.x_lbIn->value(),
-        (float)ui.xprime_ubIn->value(),
-        (float)ui.xprime_lbIn->value(),
-        (float)ui.roll_lbIn->value(),
-        (float)ui.abrakingIn->value(),
-        (float)ui.hoverIn->value()
-			  );
+  QString val;
+  QFile file;
+  file.setFileName("/Users/danielricketts/Development/UAV/apm_planner/src/ui/uas/test1.json");
+  file.open(QIODevice::ReadOnly | QIODevice::Text);
+  val = file.readAll();
+  file.close();
+  QLOG_DEBUG() << val;
+  QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
+  QJsonObject params = d.object();
+  bool smooth = params["smooth"].toBool();
+  QLOG_DEBUG() << smooth;
+  uint8_t lookahead = params["lookahead"].toInt();
+  QLOG_DEBUG() << lookahead;
+  float roll_lb = params["roll_lb"].toDouble();
+  QLOG_DEBUG() << roll_lb;
+  int16_t abraking = params["abraking"].toInt();
+  QLOG_DEBUG() << abraking;
+  uint16_t mid_throttle = params["mid_throttle"].toInt();
+  QLOG_DEBUG() << mid_throttle;
+  
+  QJsonObject box1 = params["box1"].toObject();
+  int16_t y_ub1 = box1["y_ub"].toInt();
+  QLOG_DEBUG() << y_ub1;
+  int16_t y_lb1 = box1["y_lb"].toInt();
+  QLOG_DEBUG() << y_lb1;
+  int16_t vy_ub1 = box1["vy_ub"].toInt();
+  QLOG_DEBUG() << vy_ub1;
+  int16_t x_ub1 = box1["x_ub"].toInt();
+  QLOG_DEBUG() << x_ub1;
+  int16_t x_lb1 = box1["x_lb"].toInt();
+  QLOG_DEBUG() << x_lb1;
+  int16_t vx_ub1 = box1["vx_ub"].toInt();
+  QLOG_DEBUG() << vx_ub1;
+  
+  QJsonObject box2 = params["box2"].toObject();
+  int16_t y_ub2 = box2["y_ub"].toInt();
+  QLOG_DEBUG() << y_ub2;
+  int16_t y_lb2 = box2["y_lb"].toInt();
+  QLOG_DEBUG() << y_lb2;
+  int16_t vy_ub2 = box2["vy_ub"].toInt();
+  QLOG_DEBUG() << vy_ub2;
+  int16_t x_ub2 = box2["x_ub"].toInt();
+  QLOG_DEBUG() << x_ub2;
+  int16_t x_lb2 = box2["x_lb"].toInt();
+  QLOG_DEBUG() << x_lb2;
+  int16_t vx_ub2 = box2["vx_ub"].toInt();
+  QLOG_DEBUG() << vx_ub2;
+  
+  QJsonObject box3 = params["box3"].toObject();
+  int16_t y_ub3 = box3["y_ub"].toInt();
+  QLOG_DEBUG() << y_ub3;
+  int16_t y_lb3 = box3["y_lb"].toInt();
+  QLOG_DEBUG() << y_lb3;
+  int16_t vy_ub3 = box3["vy_ub"].toInt();
+  QLOG_DEBUG() << vy_ub3;
+  int16_t x_ub3 = box3["x_ub"].toInt();
+  QLOG_DEBUG() << x_ub3;
+  int16_t x_lb3 = box3["x_lb"].toInt();
+  QLOG_DEBUG() << x_lb3;
+  int16_t vx_ub3 = box3["vx_ub"].toInt();
+  QLOG_DEBUG() << vx_ub3;
+  
+  QJsonObject box4 = params["box4"].toObject();
+  int16_t y_ub4 = box4["y_ub"].toInt();
+  QLOG_DEBUG() << y_ub4;
+  int16_t y_lb4 = box4["y_lb"].toInt();
+  QLOG_DEBUG() << y_lb4;
+  int16_t vy_ub4 = box4["vy_ub"].toInt();
+  QLOG_DEBUG() << vy_ub4;
+  int16_t x_ub4 = box4["x_ub"].toInt();
+  QLOG_DEBUG() << x_ub4;
+  int16_t x_lb4 = box4["x_lb"].toInt();
+  QLOG_DEBUG() << x_lb4;
+  int16_t vx_ub4 = box4["vx_ub"].toInt();
+  QLOG_DEBUG() << vx_ub4;
+       
+  UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
+  if (mav)
+    {
+       mav->setShimParams(smooth,
+			  lookahead,
+			  roll_lb,
+			  abraking,
+			  mid_throttle,
+			  
+			  y_ub1,
+			  y_lb1,
+			  vy_ub1,
+			  x_ub1,
+			  x_lb1,
+			  vx_ub1,
+
+			  y_ub2,
+			  y_lb2,
+			  vy_ub2,
+			  x_ub2,
+			  x_lb2,
+			  vx_ub2,
+
+			  y_ub3,
+			  y_lb3,
+			  vy_ub3,
+			  x_ub3,
+			  x_lb3,
+			  vx_ub3,
+
+			  y_ub4,
+			  y_lb4,
+			  vy_ub4,
+			  x_ub4,
+			  x_lb4,
+			  vx_ub4);
+
+//        mav->setShimParams(
+//         ui.smoothIn->isChecked(),
+// 	(float)ui.lookaheadIn->value(),
+//         (float)ui.h_ubIn->value(),
+// 			  (float)ui.h_lbIn->value(),
+// 			  (float)ui.hprime_ubIn->value(),
+// 			  (float)ui.hprime_lbIn->value(),
+// 			  (float)ui.x_ubIn->value(),
+//         (float)ui.x_lbIn->value(),
+//         (float)ui.xprime_ubIn->value(),
+//         (float)ui.xprime_lbIn->value(),
+//         (float)ui.roll_lbIn->value(),
+//         (float)ui.abrakingIn->value(),
+//         (float)ui.hoverIn->value()
+// 			  );
 
      }
 }
