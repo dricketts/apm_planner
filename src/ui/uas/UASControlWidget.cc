@@ -258,7 +258,11 @@ void UASControlWidget::updateShimParams()
 {
   QString val;
   QFile file;
-  file.setFileName("/Users/danielricketts/Development/UAV/apm_planner/src/ui/uas/test1.json");
+  QString fileName = QFileDialog::getOpenFileName(this,
+						  tr("Open Parameter File"),
+						  "/Users/danielricketts/Development/UAV/test-params/",
+						  tr("Json Files (*.json)"));
+  file.setFileName(fileName);
   file.open(QIODevice::ReadOnly | QIODevice::Text);
   val = file.readAll();
   file.close();

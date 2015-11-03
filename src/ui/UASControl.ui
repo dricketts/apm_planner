@@ -34,7 +34,7 @@
   <property name="toolTip">
    <string>Control widget to send basic control actions to the micro air vehicle</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,0,0,0,0,0,0,0,0" columnstretch="5,0,0,0,0,0">
    <property name="leftMargin">
     <number>4</number>
    </property>
@@ -155,65 +155,7 @@
      </property>
     </spacer>
    </item>
-   <item row="18" column="3" colspan="2">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Hover throttle</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="1">
-    <widget class="QDoubleSpinBox" name="hprime_lbIn">
-     <property name="toolTipDuration">
-      <number>-1</number>
-     </property>
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>-500.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="15" column="1">
-    <widget class="QDoubleSpinBox" name="xprime_lbIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-1000000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>-500.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="1">
-    <widget class="QDoubleSpinBox" name="roll_lbIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>-0.520000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="21" column="1" colspan="4">
+   <item row="8" column="1" colspan="4">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -225,20 +167,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="10" column="3" colspan="2">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Vert vel max (cm/s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="3" colspan="2">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Vert vel min (cm/s)</string>
-     </property>
-    </widget>
    </item>
    <item row="0" column="0" rowspan="7">
     <spacer name="horizontalSpacer">
@@ -252,82 +180,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="15" column="3" colspan="2">
-    <widget class="QLabel" name="label_10">
-     <property name="text">
-      <string>Horiz vel min (cm/s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="13" column="3" colspan="2">
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>Horiz pos min (cm)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="3" colspan="2">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Horiz vel max (cm/s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="17" column="3" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Braking accel (cm/s/s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QDoubleSpinBox" name="h_ubIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>3000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <widget class="QDoubleSpinBox" name="h_lbIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>1000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1">
-    <widget class="QDoubleSpinBox" name="hprime_ubIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>500.000000000000000</double>
-     </property>
-    </widget>
    </item>
    <item row="5" column="4">
     <widget class="QPushButton" name="setModeButton">
@@ -387,108 +239,6 @@
      </property>
     </spacer>
    </item>
-   <item row="8" column="3" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Vert pos max (cm)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="18" column="1">
-    <widget class="QDoubleSpinBox" name="hoverIn">
-     <property name="maximum">
-      <double>1000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>500.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1">
-    <widget class="QDoubleSpinBox" name="x_ubIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>1000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="13" column="1">
-    <widget class="QDoubleSpinBox" name="x_lbIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>-1000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="1">
-    <widget class="QDoubleSpinBox" name="xprime_ubIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>500.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="17" column="1">
-    <widget class="QDoubleSpinBox" name="abrakingIn">
-     <property name="decimals">
-      <number>4</number>
-     </property>
-     <property name="minimum">
-      <double>-10000.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>-500.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="3" colspan="2">
-    <widget class="QLabel" name="label_13">
-     <property name="text">
-      <string>Roll att min (radians)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="3" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Vert pos min (cm)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="3" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Horiz pos max (cm)</string>
-     </property>
-    </widget>
-   </item>
    <item row="7" column="1" colspan="4">
     <widget class="QPushButton" name="paramSetButton">
      <property name="text">
@@ -534,30 +284,6 @@
      </property>
      <property name="margin">
       <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="19" column="1">
-    <widget class="QCheckBox" name="smoothIn">
-     <property name="text">
-      <string>Smooth</string>
-     </property>
-    </widget>
-   </item>
-   <item row="20" column="1">
-    <widget class="QDoubleSpinBox" name="lookaheadIn">
-     <property name="maximum">
-      <double>10000000.000000000000000</double>
-     </property>
-     <property name="value">
-      <double>100.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="20" column="3">
-    <widget class="QLabel" name="label_11">
-     <property name="text">
-      <string>Lookahead</string>
      </property>
     </widget>
    </item>
