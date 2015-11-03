@@ -885,7 +885,7 @@ public slots:
     /** @brief Disable the (box) shim */
     virtual void disableShim();
     /** @brief Set (box) shim parameters */
-    virtual void setShimParams(bool smooth, uint8_t lookahead, float roll_lb,
+    virtual void setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float roll_lb,
 			       uint16_t abraking, uint16_t mid_throttle,
 			       
 			       uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,

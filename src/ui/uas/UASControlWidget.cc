@@ -269,6 +269,7 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << val;
   QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
   QJsonObject params = d.object();
+  float d_ctrl = params["d_ctrl"].toDouble();
   bool smooth = params["smooth"].toBool();
   QLOG_DEBUG() << smooth;
   uint8_t lookahead = params["lookahead"].toInt();
@@ -339,39 +340,40 @@ void UASControlWidget::updateShimParams()
   UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
   if (mav)
     {
-       mav->setShimParams(smooth,
-			  lookahead,
-			  roll_lb,
-			  abraking,
-			  mid_throttle,
-			  
-			  y_ub1,
-			  y_lb1,
-			  vy_ub1,
-			  x_ub1,
-			  x_lb1,
-			  vx_ub1,
+      mav->setShimParams(d_ctrl,
+			 smooth,
+			 lookahead,
+			 roll_lb,
+			 abraking,
+			 mid_throttle,
+			 
+			 y_ub1,
+			 y_lb1,
+			 vy_ub1,
+			 x_ub1,
+			 x_lb1,
+			 vx_ub1,
 
-			  y_ub2,
-			  y_lb2,
-			  vy_ub2,
-			  x_ub2,
-			  x_lb2,
-			  vx_ub2,
-
-			  y_ub3,
+			 y_ub2,
+			 y_lb2,
+			 vy_ub2,
+			 x_ub2,
+			 x_lb2,
+			 vx_ub2,
+			 
+			 y_ub3,
 			  y_lb3,
-			  vy_ub3,
-			  x_ub3,
-			  x_lb3,
-			  vx_ub3,
-
-			  y_ub4,
-			  y_lb4,
-			  vy_ub4,
-			  x_ub4,
-			  x_lb4,
-			  vx_ub4);
+			 vy_ub3,
+			 x_ub3,
+			 x_lb3,
+			 vx_ub3,
+			 
+			 y_ub4,
+			 y_lb4,
+			 vy_ub4,
+			 x_ub4,
+			 x_lb4,
+			 vx_ub4);
 
 //        mav->setShimParams(
 //         ui.smoothIn->isChecked(),

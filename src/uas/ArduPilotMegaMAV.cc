@@ -491,7 +491,7 @@ void ArduPilotMegaMAV::disableShim()
 }
 
 // TODO - when you update shim params update here --M
-void ArduPilotMegaMAV::setShimParams(bool smooth, uint8_t lookahead, float roll_lb,
+void ArduPilotMegaMAV::setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float roll_lb,
 				     uint16_t abraking, uint16_t mid_throttle,
 
 				     uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,
@@ -511,7 +511,7 @@ void ArduPilotMegaMAV::setShimParams(bool smooth, uint8_t lookahead, float roll_
       mavlink_msg_shim_params_pack(getSystemId(),
 				   getComponentId(),
 				   &msg,
-				   smooth, lookahead, roll_lb,
+				   d_ctrl, smooth, lookahead, roll_lb,
 				   abraking, mid_throttle,
 
 				   y_ub1, y_lb1, vy_ub1,

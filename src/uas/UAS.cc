@@ -2799,7 +2799,7 @@ void UAS::disableShim() {}
 /**
  * This does nothing. Subclasses should override to actually enable the shim.
  */
-void UAS::setShimParams(bool smooth, uint8_t lookahead, float roll_lb,
+void UAS::setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float roll_lb,
 			uint16_t abraking, uint16_t mid_throttle,
 			       
 			uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,

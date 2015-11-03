@@ -1565,10 +1565,11 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_shim_params_t packet_in = {
-		17.0,17443,17547,17651,17755,17859,17963,18067,18171,18275,18379,18483,18587,18691,18795,18899,19003,19107,19211,19315,19419,19523,19627,19731,19835,19939,20043,173,240
+		17.0,45.0,17651,17755,17859,17963,18067,18171,18275,18379,18483,18587,18691,18795,18899,19003,19107,19211,19315,19419,19523,19627,19731,19835,19939,20043,20147,20251,185,252
     };
 	mavlink_shim_params_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.d_ctrl = packet_in.d_ctrl;
         	packet1.roll_lb = packet_in.roll_lb;
         	packet1.abraking = packet_in.abraking;
         	packet1.mid_throttle = packet_in.mid_throttle;
@@ -1607,12 +1608,12 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
+	mavlink_msg_shim_params_pack(system_id, component_id, &msg , packet1.d_ctrl , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
+	mavlink_msg_shim_params_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.d_ctrl , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
 	mavlink_msg_shim_params_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1625,7 +1626,7 @@ static void mavlink_test_shim_params(uint8_t system_id, uint8_t component_id, ma
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
+	mavlink_msg_shim_params_send(MAVLINK_COMM_1 , packet1.d_ctrl , packet1.smooth , packet1.lookahead , packet1.roll_lb , packet1.abraking , packet1.mid_throttle , packet1.y_ub1 , packet1.y_lb1 , packet1.vy_ub1 , packet1.x_ub1 , packet1.x_lb1 , packet1.vx_ub1 , packet1.y_ub2 , packet1.y_lb2 , packet1.vy_ub2 , packet1.x_ub2 , packet1.x_lb2 , packet1.vx_ub2 , packet1.y_ub3 , packet1.y_lb3 , packet1.vy_ub3 , packet1.x_ub3 , packet1.x_lb3 , packet1.vx_ub3 , packet1.y_ub4 , packet1.y_lb4 , packet1.vy_ub4 , packet1.x_ub4 , packet1.x_lb4 , packet1.vx_ub4 );
 	mavlink_msg_shim_params_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }

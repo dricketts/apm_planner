@@ -4,6 +4,7 @@
 
 typedef struct __mavlink_shim_params_t
 {
+ float d_ctrl; ///< 1 to enable smoothing, 0 to disable
  float roll_lb; ///< the lower bound on roll angle allowed by the shim in (??DEGREES??)
  int16_t abraking; ///< The braking acceleration in cm/s/s issued when the height-dimension shim is engaged. Should be at least the acceleration due to gravity.
  uint16_t mid_throttle; ///< The throttle required for hover.
@@ -35,46 +36,47 @@ typedef struct __mavlink_shim_params_t
  uint8_t lookahead; ///< lookahead factor for the smoothing shim
 } mavlink_shim_params_t;
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 58
-#define MAVLINK_MSG_ID_231_LEN 58
+#define MAVLINK_MSG_ID_SHIM_PARAMS_LEN 62
+#define MAVLINK_MSG_ID_231_LEN 62
 
-#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 8
-#define MAVLINK_MSG_ID_231_CRC 8
+#define MAVLINK_MSG_ID_SHIM_PARAMS_CRC 162
+#define MAVLINK_MSG_ID_231_CRC 162
 
 
 
 #define MAVLINK_MESSAGE_INFO_SHIM_PARAMS { \
 	"SHIM_PARAMS", \
-	29, \
-	{  { "roll_lb", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_shim_params_t, roll_lb) }, \
-         { "abraking", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_shim_params_t, abraking) }, \
-         { "mid_throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 6, offsetof(mavlink_shim_params_t, mid_throttle) }, \
-         { "y_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_shim_params_t, y_ub1) }, \
-         { "y_lb1", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_shim_params_t, y_lb1) }, \
-         { "vy_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_shim_params_t, vy_ub1) }, \
-         { "x_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_shim_params_t, x_ub1) }, \
-         { "x_lb1", NULL, MAVLINK_TYPE_INT16_T, 0, 16, offsetof(mavlink_shim_params_t, x_lb1) }, \
-         { "vx_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 18, offsetof(mavlink_shim_params_t, vx_ub1) }, \
-         { "y_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 20, offsetof(mavlink_shim_params_t, y_ub2) }, \
-         { "y_lb2", NULL, MAVLINK_TYPE_INT16_T, 0, 22, offsetof(mavlink_shim_params_t, y_lb2) }, \
-         { "vy_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 24, offsetof(mavlink_shim_params_t, vy_ub2) }, \
-         { "x_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 26, offsetof(mavlink_shim_params_t, x_ub2) }, \
-         { "x_lb2", NULL, MAVLINK_TYPE_INT16_T, 0, 28, offsetof(mavlink_shim_params_t, x_lb2) }, \
-         { "vx_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 30, offsetof(mavlink_shim_params_t, vx_ub2) }, \
-         { "y_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 32, offsetof(mavlink_shim_params_t, y_ub3) }, \
-         { "y_lb3", NULL, MAVLINK_TYPE_INT16_T, 0, 34, offsetof(mavlink_shim_params_t, y_lb3) }, \
-         { "vy_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 36, offsetof(mavlink_shim_params_t, vy_ub3) }, \
-         { "x_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 38, offsetof(mavlink_shim_params_t, x_ub3) }, \
-         { "x_lb3", NULL, MAVLINK_TYPE_INT16_T, 0, 40, offsetof(mavlink_shim_params_t, x_lb3) }, \
-         { "vx_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 42, offsetof(mavlink_shim_params_t, vx_ub3) }, \
-         { "y_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 44, offsetof(mavlink_shim_params_t, y_ub4) }, \
-         { "y_lb4", NULL, MAVLINK_TYPE_INT16_T, 0, 46, offsetof(mavlink_shim_params_t, y_lb4) }, \
-         { "vy_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 48, offsetof(mavlink_shim_params_t, vy_ub4) }, \
-         { "x_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 50, offsetof(mavlink_shim_params_t, x_ub4) }, \
-         { "x_lb4", NULL, MAVLINK_TYPE_INT16_T, 0, 52, offsetof(mavlink_shim_params_t, x_lb4) }, \
-         { "vx_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 54, offsetof(mavlink_shim_params_t, vx_ub4) }, \
-         { "smooth", NULL, MAVLINK_TYPE_UINT8_T, 0, 56, offsetof(mavlink_shim_params_t, smooth) }, \
-         { "lookahead", NULL, MAVLINK_TYPE_UINT8_T, 0, 57, offsetof(mavlink_shim_params_t, lookahead) }, \
+	30, \
+	{  { "d_ctrl", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_shim_params_t, d_ctrl) }, \
+         { "roll_lb", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_shim_params_t, roll_lb) }, \
+         { "abraking", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_shim_params_t, abraking) }, \
+         { "mid_throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 10, offsetof(mavlink_shim_params_t, mid_throttle) }, \
+         { "y_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_shim_params_t, y_ub1) }, \
+         { "y_lb1", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_shim_params_t, y_lb1) }, \
+         { "vy_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 16, offsetof(mavlink_shim_params_t, vy_ub1) }, \
+         { "x_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 18, offsetof(mavlink_shim_params_t, x_ub1) }, \
+         { "x_lb1", NULL, MAVLINK_TYPE_INT16_T, 0, 20, offsetof(mavlink_shim_params_t, x_lb1) }, \
+         { "vx_ub1", NULL, MAVLINK_TYPE_INT16_T, 0, 22, offsetof(mavlink_shim_params_t, vx_ub1) }, \
+         { "y_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 24, offsetof(mavlink_shim_params_t, y_ub2) }, \
+         { "y_lb2", NULL, MAVLINK_TYPE_INT16_T, 0, 26, offsetof(mavlink_shim_params_t, y_lb2) }, \
+         { "vy_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 28, offsetof(mavlink_shim_params_t, vy_ub2) }, \
+         { "x_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 30, offsetof(mavlink_shim_params_t, x_ub2) }, \
+         { "x_lb2", NULL, MAVLINK_TYPE_INT16_T, 0, 32, offsetof(mavlink_shim_params_t, x_lb2) }, \
+         { "vx_ub2", NULL, MAVLINK_TYPE_INT16_T, 0, 34, offsetof(mavlink_shim_params_t, vx_ub2) }, \
+         { "y_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 36, offsetof(mavlink_shim_params_t, y_ub3) }, \
+         { "y_lb3", NULL, MAVLINK_TYPE_INT16_T, 0, 38, offsetof(mavlink_shim_params_t, y_lb3) }, \
+         { "vy_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 40, offsetof(mavlink_shim_params_t, vy_ub3) }, \
+         { "x_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 42, offsetof(mavlink_shim_params_t, x_ub3) }, \
+         { "x_lb3", NULL, MAVLINK_TYPE_INT16_T, 0, 44, offsetof(mavlink_shim_params_t, x_lb3) }, \
+         { "vx_ub3", NULL, MAVLINK_TYPE_INT16_T, 0, 46, offsetof(mavlink_shim_params_t, vx_ub3) }, \
+         { "y_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 48, offsetof(mavlink_shim_params_t, y_ub4) }, \
+         { "y_lb4", NULL, MAVLINK_TYPE_INT16_T, 0, 50, offsetof(mavlink_shim_params_t, y_lb4) }, \
+         { "vy_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 52, offsetof(mavlink_shim_params_t, vy_ub4) }, \
+         { "x_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 54, offsetof(mavlink_shim_params_t, x_ub4) }, \
+         { "x_lb4", NULL, MAVLINK_TYPE_INT16_T, 0, 56, offsetof(mavlink_shim_params_t, x_lb4) }, \
+         { "vx_ub4", NULL, MAVLINK_TYPE_INT16_T, 0, 58, offsetof(mavlink_shim_params_t, vx_ub4) }, \
+         { "smooth", NULL, MAVLINK_TYPE_UINT8_T, 0, 60, offsetof(mavlink_shim_params_t, smooth) }, \
+         { "lookahead", NULL, MAVLINK_TYPE_UINT8_T, 0, 61, offsetof(mavlink_shim_params_t, lookahead) }, \
          } \
 }
 
@@ -85,6 +87,7 @@ typedef struct __mavlink_shim_params_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
+ * @param d_ctrl 1 to enable smoothing, 0 to disable
  * @param smooth 1 to enable smoothing, 0 to disable
  * @param lookahead lookahead factor for the smoothing shim
  * @param roll_lb the lower bound on roll angle allowed by the shim in (??DEGREES??)
@@ -117,43 +120,45 @@ typedef struct __mavlink_shim_params_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
+						       float d_ctrl, uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
-	_mav_put_float(buf, 0, roll_lb);
-	_mav_put_int16_t(buf, 4, abraking);
-	_mav_put_uint16_t(buf, 6, mid_throttle);
-	_mav_put_int16_t(buf, 8, y_ub1);
-	_mav_put_int16_t(buf, 10, y_lb1);
-	_mav_put_int16_t(buf, 12, vy_ub1);
-	_mav_put_int16_t(buf, 14, x_ub1);
-	_mav_put_int16_t(buf, 16, x_lb1);
-	_mav_put_int16_t(buf, 18, vx_ub1);
-	_mav_put_int16_t(buf, 20, y_ub2);
-	_mav_put_int16_t(buf, 22, y_lb2);
-	_mav_put_int16_t(buf, 24, vy_ub2);
-	_mav_put_int16_t(buf, 26, x_ub2);
-	_mav_put_int16_t(buf, 28, x_lb2);
-	_mav_put_int16_t(buf, 30, vx_ub2);
-	_mav_put_int16_t(buf, 32, y_ub3);
-	_mav_put_int16_t(buf, 34, y_lb3);
-	_mav_put_int16_t(buf, 36, vy_ub3);
-	_mav_put_int16_t(buf, 38, x_ub3);
-	_mav_put_int16_t(buf, 40, x_lb3);
-	_mav_put_int16_t(buf, 42, vx_ub3);
-	_mav_put_int16_t(buf, 44, y_ub4);
-	_mav_put_int16_t(buf, 46, y_lb4);
-	_mav_put_int16_t(buf, 48, vy_ub4);
-	_mav_put_int16_t(buf, 50, x_ub4);
-	_mav_put_int16_t(buf, 52, x_lb4);
-	_mav_put_int16_t(buf, 54, vx_ub4);
-	_mav_put_uint8_t(buf, 56, smooth);
-	_mav_put_uint8_t(buf, 57, lookahead);
+	_mav_put_float(buf, 0, d_ctrl);
+	_mav_put_float(buf, 4, roll_lb);
+	_mav_put_int16_t(buf, 8, abraking);
+	_mav_put_uint16_t(buf, 10, mid_throttle);
+	_mav_put_int16_t(buf, 12, y_ub1);
+	_mav_put_int16_t(buf, 14, y_lb1);
+	_mav_put_int16_t(buf, 16, vy_ub1);
+	_mav_put_int16_t(buf, 18, x_ub1);
+	_mav_put_int16_t(buf, 20, x_lb1);
+	_mav_put_int16_t(buf, 22, vx_ub1);
+	_mav_put_int16_t(buf, 24, y_ub2);
+	_mav_put_int16_t(buf, 26, y_lb2);
+	_mav_put_int16_t(buf, 28, vy_ub2);
+	_mav_put_int16_t(buf, 30, x_ub2);
+	_mav_put_int16_t(buf, 32, x_lb2);
+	_mav_put_int16_t(buf, 34, vx_ub2);
+	_mav_put_int16_t(buf, 36, y_ub3);
+	_mav_put_int16_t(buf, 38, y_lb3);
+	_mav_put_int16_t(buf, 40, vy_ub3);
+	_mav_put_int16_t(buf, 42, x_ub3);
+	_mav_put_int16_t(buf, 44, x_lb3);
+	_mav_put_int16_t(buf, 46, vx_ub3);
+	_mav_put_int16_t(buf, 48, y_ub4);
+	_mav_put_int16_t(buf, 50, y_lb4);
+	_mav_put_int16_t(buf, 52, vy_ub4);
+	_mav_put_int16_t(buf, 54, x_ub4);
+	_mav_put_int16_t(buf, 56, x_lb4);
+	_mav_put_int16_t(buf, 58, vx_ub4);
+	_mav_put_uint8_t(buf, 60, smooth);
+	_mav_put_uint8_t(buf, 61, lookahead);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
 	mavlink_shim_params_t packet;
+	packet.d_ctrl = d_ctrl;
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
@@ -201,6 +206,7 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
+ * @param d_ctrl 1 to enable smoothing, 0 to disable
  * @param smooth 1 to enable smoothing, 0 to disable
  * @param lookahead lookahead factor for the smoothing shim
  * @param roll_lb the lower bound on roll angle allowed by the shim in (??DEGREES??)
@@ -234,43 +240,45 @@ static inline uint16_t mavlink_msg_shim_params_pack(uint8_t system_id, uint8_t c
  */
 static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t smooth,uint8_t lookahead,float roll_lb,int16_t abraking,uint16_t mid_throttle,int16_t y_ub1,int16_t y_lb1,int16_t vy_ub1,int16_t x_ub1,int16_t x_lb1,int16_t vx_ub1,int16_t y_ub2,int16_t y_lb2,int16_t vy_ub2,int16_t x_ub2,int16_t x_lb2,int16_t vx_ub2,int16_t y_ub3,int16_t y_lb3,int16_t vy_ub3,int16_t x_ub3,int16_t x_lb3,int16_t vx_ub3,int16_t y_ub4,int16_t y_lb4,int16_t vy_ub4,int16_t x_ub4,int16_t x_lb4,int16_t vx_ub4)
+						           float d_ctrl,uint8_t smooth,uint8_t lookahead,float roll_lb,int16_t abraking,uint16_t mid_throttle,int16_t y_ub1,int16_t y_lb1,int16_t vy_ub1,int16_t x_ub1,int16_t x_lb1,int16_t vx_ub1,int16_t y_ub2,int16_t y_lb2,int16_t vy_ub2,int16_t x_ub2,int16_t x_lb2,int16_t vx_ub2,int16_t y_ub3,int16_t y_lb3,int16_t vy_ub3,int16_t x_ub3,int16_t x_lb3,int16_t vx_ub3,int16_t y_ub4,int16_t y_lb4,int16_t vy_ub4,int16_t x_ub4,int16_t x_lb4,int16_t vx_ub4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
-	_mav_put_float(buf, 0, roll_lb);
-	_mav_put_int16_t(buf, 4, abraking);
-	_mav_put_uint16_t(buf, 6, mid_throttle);
-	_mav_put_int16_t(buf, 8, y_ub1);
-	_mav_put_int16_t(buf, 10, y_lb1);
-	_mav_put_int16_t(buf, 12, vy_ub1);
-	_mav_put_int16_t(buf, 14, x_ub1);
-	_mav_put_int16_t(buf, 16, x_lb1);
-	_mav_put_int16_t(buf, 18, vx_ub1);
-	_mav_put_int16_t(buf, 20, y_ub2);
-	_mav_put_int16_t(buf, 22, y_lb2);
-	_mav_put_int16_t(buf, 24, vy_ub2);
-	_mav_put_int16_t(buf, 26, x_ub2);
-	_mav_put_int16_t(buf, 28, x_lb2);
-	_mav_put_int16_t(buf, 30, vx_ub2);
-	_mav_put_int16_t(buf, 32, y_ub3);
-	_mav_put_int16_t(buf, 34, y_lb3);
-	_mav_put_int16_t(buf, 36, vy_ub3);
-	_mav_put_int16_t(buf, 38, x_ub3);
-	_mav_put_int16_t(buf, 40, x_lb3);
-	_mav_put_int16_t(buf, 42, vx_ub3);
-	_mav_put_int16_t(buf, 44, y_ub4);
-	_mav_put_int16_t(buf, 46, y_lb4);
-	_mav_put_int16_t(buf, 48, vy_ub4);
-	_mav_put_int16_t(buf, 50, x_ub4);
-	_mav_put_int16_t(buf, 52, x_lb4);
-	_mav_put_int16_t(buf, 54, vx_ub4);
-	_mav_put_uint8_t(buf, 56, smooth);
-	_mav_put_uint8_t(buf, 57, lookahead);
+	_mav_put_float(buf, 0, d_ctrl);
+	_mav_put_float(buf, 4, roll_lb);
+	_mav_put_int16_t(buf, 8, abraking);
+	_mav_put_uint16_t(buf, 10, mid_throttle);
+	_mav_put_int16_t(buf, 12, y_ub1);
+	_mav_put_int16_t(buf, 14, y_lb1);
+	_mav_put_int16_t(buf, 16, vy_ub1);
+	_mav_put_int16_t(buf, 18, x_ub1);
+	_mav_put_int16_t(buf, 20, x_lb1);
+	_mav_put_int16_t(buf, 22, vx_ub1);
+	_mav_put_int16_t(buf, 24, y_ub2);
+	_mav_put_int16_t(buf, 26, y_lb2);
+	_mav_put_int16_t(buf, 28, vy_ub2);
+	_mav_put_int16_t(buf, 30, x_ub2);
+	_mav_put_int16_t(buf, 32, x_lb2);
+	_mav_put_int16_t(buf, 34, vx_ub2);
+	_mav_put_int16_t(buf, 36, y_ub3);
+	_mav_put_int16_t(buf, 38, y_lb3);
+	_mav_put_int16_t(buf, 40, vy_ub3);
+	_mav_put_int16_t(buf, 42, x_ub3);
+	_mav_put_int16_t(buf, 44, x_lb3);
+	_mav_put_int16_t(buf, 46, vx_ub3);
+	_mav_put_int16_t(buf, 48, y_ub4);
+	_mav_put_int16_t(buf, 50, y_lb4);
+	_mav_put_int16_t(buf, 52, vy_ub4);
+	_mav_put_int16_t(buf, 54, x_ub4);
+	_mav_put_int16_t(buf, 56, x_lb4);
+	_mav_put_int16_t(buf, 58, vx_ub4);
+	_mav_put_uint8_t(buf, 60, smooth);
+	_mav_put_uint8_t(buf, 61, lookahead);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN);
 #else
 	mavlink_shim_params_t packet;
+	packet.d_ctrl = d_ctrl;
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
@@ -322,7 +330,7 @@ static inline uint16_t mavlink_msg_shim_params_pack_chan(uint8_t system_id, uint
  */
 static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->smooth, shim_params->lookahead, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle, shim_params->y_ub1, shim_params->y_lb1, shim_params->vy_ub1, shim_params->x_ub1, shim_params->x_lb1, shim_params->vx_ub1, shim_params->y_ub2, shim_params->y_lb2, shim_params->vy_ub2, shim_params->x_ub2, shim_params->x_lb2, shim_params->vx_ub2, shim_params->y_ub3, shim_params->y_lb3, shim_params->vy_ub3, shim_params->x_ub3, shim_params->x_lb3, shim_params->vx_ub3, shim_params->y_ub4, shim_params->y_lb4, shim_params->vy_ub4, shim_params->x_ub4, shim_params->x_lb4, shim_params->vx_ub4);
+	return mavlink_msg_shim_params_pack(system_id, component_id, msg, shim_params->d_ctrl, shim_params->smooth, shim_params->lookahead, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle, shim_params->y_ub1, shim_params->y_lb1, shim_params->vy_ub1, shim_params->x_ub1, shim_params->x_lb1, shim_params->vx_ub1, shim_params->y_ub2, shim_params->y_lb2, shim_params->vy_ub2, shim_params->x_ub2, shim_params->x_lb2, shim_params->vx_ub2, shim_params->y_ub3, shim_params->y_lb3, shim_params->vy_ub3, shim_params->x_ub3, shim_params->x_lb3, shim_params->vx_ub3, shim_params->y_ub4, shim_params->y_lb4, shim_params->vy_ub4, shim_params->x_ub4, shim_params->x_lb4, shim_params->vx_ub4);
 }
 
 /**
@@ -336,13 +344,14 @@ static inline uint16_t mavlink_msg_shim_params_encode(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_shim_params_t* shim_params)
 {
-	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->smooth, shim_params->lookahead, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle, shim_params->y_ub1, shim_params->y_lb1, shim_params->vy_ub1, shim_params->x_ub1, shim_params->x_lb1, shim_params->vx_ub1, shim_params->y_ub2, shim_params->y_lb2, shim_params->vy_ub2, shim_params->x_ub2, shim_params->x_lb2, shim_params->vx_ub2, shim_params->y_ub3, shim_params->y_lb3, shim_params->vy_ub3, shim_params->x_ub3, shim_params->x_lb3, shim_params->vx_ub3, shim_params->y_ub4, shim_params->y_lb4, shim_params->vy_ub4, shim_params->x_ub4, shim_params->x_lb4, shim_params->vx_ub4);
+	return mavlink_msg_shim_params_pack_chan(system_id, component_id, chan, msg, shim_params->d_ctrl, shim_params->smooth, shim_params->lookahead, shim_params->roll_lb, shim_params->abraking, shim_params->mid_throttle, shim_params->y_ub1, shim_params->y_lb1, shim_params->vy_ub1, shim_params->x_ub1, shim_params->x_lb1, shim_params->vx_ub1, shim_params->y_ub2, shim_params->y_lb2, shim_params->vy_ub2, shim_params->x_ub2, shim_params->x_lb2, shim_params->vx_ub2, shim_params->y_ub3, shim_params->y_lb3, shim_params->vy_ub3, shim_params->x_ub3, shim_params->x_lb3, shim_params->vx_ub3, shim_params->y_ub4, shim_params->y_lb4, shim_params->vy_ub4, shim_params->x_ub4, shim_params->x_lb4, shim_params->vx_ub4);
 }
 
 /**
  * @brief Send a shim_params message
  * @param chan MAVLink channel to send the message
  *
+ * @param d_ctrl 1 to enable smoothing, 0 to disable
  * @param smooth 1 to enable smoothing, 0 to disable
  * @param lookahead lookahead factor for the smoothing shim
  * @param roll_lb the lower bound on roll angle allowed by the shim in (??DEGREES??)
@@ -375,39 +384,40 @@ static inline uint16_t mavlink_msg_shim_params_encode_chan(uint8_t system_id, ui
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
+static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, float d_ctrl, uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SHIM_PARAMS_LEN];
-	_mav_put_float(buf, 0, roll_lb);
-	_mav_put_int16_t(buf, 4, abraking);
-	_mav_put_uint16_t(buf, 6, mid_throttle);
-	_mav_put_int16_t(buf, 8, y_ub1);
-	_mav_put_int16_t(buf, 10, y_lb1);
-	_mav_put_int16_t(buf, 12, vy_ub1);
-	_mav_put_int16_t(buf, 14, x_ub1);
-	_mav_put_int16_t(buf, 16, x_lb1);
-	_mav_put_int16_t(buf, 18, vx_ub1);
-	_mav_put_int16_t(buf, 20, y_ub2);
-	_mav_put_int16_t(buf, 22, y_lb2);
-	_mav_put_int16_t(buf, 24, vy_ub2);
-	_mav_put_int16_t(buf, 26, x_ub2);
-	_mav_put_int16_t(buf, 28, x_lb2);
-	_mav_put_int16_t(buf, 30, vx_ub2);
-	_mav_put_int16_t(buf, 32, y_ub3);
-	_mav_put_int16_t(buf, 34, y_lb3);
-	_mav_put_int16_t(buf, 36, vy_ub3);
-	_mav_put_int16_t(buf, 38, x_ub3);
-	_mav_put_int16_t(buf, 40, x_lb3);
-	_mav_put_int16_t(buf, 42, vx_ub3);
-	_mav_put_int16_t(buf, 44, y_ub4);
-	_mav_put_int16_t(buf, 46, y_lb4);
-	_mav_put_int16_t(buf, 48, vy_ub4);
-	_mav_put_int16_t(buf, 50, x_ub4);
-	_mav_put_int16_t(buf, 52, x_lb4);
-	_mav_put_int16_t(buf, 54, vx_ub4);
-	_mav_put_uint8_t(buf, 56, smooth);
-	_mav_put_uint8_t(buf, 57, lookahead);
+	_mav_put_float(buf, 0, d_ctrl);
+	_mav_put_float(buf, 4, roll_lb);
+	_mav_put_int16_t(buf, 8, abraking);
+	_mav_put_uint16_t(buf, 10, mid_throttle);
+	_mav_put_int16_t(buf, 12, y_ub1);
+	_mav_put_int16_t(buf, 14, y_lb1);
+	_mav_put_int16_t(buf, 16, vy_ub1);
+	_mav_put_int16_t(buf, 18, x_ub1);
+	_mav_put_int16_t(buf, 20, x_lb1);
+	_mav_put_int16_t(buf, 22, vx_ub1);
+	_mav_put_int16_t(buf, 24, y_ub2);
+	_mav_put_int16_t(buf, 26, y_lb2);
+	_mav_put_int16_t(buf, 28, vy_ub2);
+	_mav_put_int16_t(buf, 30, x_ub2);
+	_mav_put_int16_t(buf, 32, x_lb2);
+	_mav_put_int16_t(buf, 34, vx_ub2);
+	_mav_put_int16_t(buf, 36, y_ub3);
+	_mav_put_int16_t(buf, 38, y_lb3);
+	_mav_put_int16_t(buf, 40, vy_ub3);
+	_mav_put_int16_t(buf, 42, x_ub3);
+	_mav_put_int16_t(buf, 44, x_lb3);
+	_mav_put_int16_t(buf, 46, vx_ub3);
+	_mav_put_int16_t(buf, 48, y_ub4);
+	_mav_put_int16_t(buf, 50, y_lb4);
+	_mav_put_int16_t(buf, 52, vy_ub4);
+	_mav_put_int16_t(buf, 54, x_ub4);
+	_mav_put_int16_t(buf, 56, x_lb4);
+	_mav_put_int16_t(buf, 58, vx_ub4);
+	_mav_put_uint8_t(buf, 60, smooth);
+	_mav_put_uint8_t(buf, 61, lookahead);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -416,6 +426,7 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t 
 #endif
 #else
 	mavlink_shim_params_t packet;
+	packet.d_ctrl = d_ctrl;
 	packet.roll_lb = roll_lb;
 	packet.abraking = abraking;
 	packet.mid_throttle = mid_throttle;
@@ -462,39 +473,40 @@ static inline void mavlink_msg_shim_params_send(mavlink_channel_t chan, uint8_t 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
+static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float d_ctrl, uint8_t smooth, uint8_t lookahead, float roll_lb, int16_t abraking, uint16_t mid_throttle, int16_t y_ub1, int16_t y_lb1, int16_t vy_ub1, int16_t x_ub1, int16_t x_lb1, int16_t vx_ub1, int16_t y_ub2, int16_t y_lb2, int16_t vy_ub2, int16_t x_ub2, int16_t x_lb2, int16_t vx_ub2, int16_t y_ub3, int16_t y_lb3, int16_t vy_ub3, int16_t x_ub3, int16_t x_lb3, int16_t vx_ub3, int16_t y_ub4, int16_t y_lb4, int16_t vy_ub4, int16_t x_ub4, int16_t x_lb4, int16_t vx_ub4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_float(buf, 0, roll_lb);
-	_mav_put_int16_t(buf, 4, abraking);
-	_mav_put_uint16_t(buf, 6, mid_throttle);
-	_mav_put_int16_t(buf, 8, y_ub1);
-	_mav_put_int16_t(buf, 10, y_lb1);
-	_mav_put_int16_t(buf, 12, vy_ub1);
-	_mav_put_int16_t(buf, 14, x_ub1);
-	_mav_put_int16_t(buf, 16, x_lb1);
-	_mav_put_int16_t(buf, 18, vx_ub1);
-	_mav_put_int16_t(buf, 20, y_ub2);
-	_mav_put_int16_t(buf, 22, y_lb2);
-	_mav_put_int16_t(buf, 24, vy_ub2);
-	_mav_put_int16_t(buf, 26, x_ub2);
-	_mav_put_int16_t(buf, 28, x_lb2);
-	_mav_put_int16_t(buf, 30, vx_ub2);
-	_mav_put_int16_t(buf, 32, y_ub3);
-	_mav_put_int16_t(buf, 34, y_lb3);
-	_mav_put_int16_t(buf, 36, vy_ub3);
-	_mav_put_int16_t(buf, 38, x_ub3);
-	_mav_put_int16_t(buf, 40, x_lb3);
-	_mav_put_int16_t(buf, 42, vx_ub3);
-	_mav_put_int16_t(buf, 44, y_ub4);
-	_mav_put_int16_t(buf, 46, y_lb4);
-	_mav_put_int16_t(buf, 48, vy_ub4);
-	_mav_put_int16_t(buf, 50, x_ub4);
-	_mav_put_int16_t(buf, 52, x_lb4);
-	_mav_put_int16_t(buf, 54, vx_ub4);
-	_mav_put_uint8_t(buf, 56, smooth);
-	_mav_put_uint8_t(buf, 57, lookahead);
+	_mav_put_float(buf, 0, d_ctrl);
+	_mav_put_float(buf, 4, roll_lb);
+	_mav_put_int16_t(buf, 8, abraking);
+	_mav_put_uint16_t(buf, 10, mid_throttle);
+	_mav_put_int16_t(buf, 12, y_ub1);
+	_mav_put_int16_t(buf, 14, y_lb1);
+	_mav_put_int16_t(buf, 16, vy_ub1);
+	_mav_put_int16_t(buf, 18, x_ub1);
+	_mav_put_int16_t(buf, 20, x_lb1);
+	_mav_put_int16_t(buf, 22, vx_ub1);
+	_mav_put_int16_t(buf, 24, y_ub2);
+	_mav_put_int16_t(buf, 26, y_lb2);
+	_mav_put_int16_t(buf, 28, vy_ub2);
+	_mav_put_int16_t(buf, 30, x_ub2);
+	_mav_put_int16_t(buf, 32, x_lb2);
+	_mav_put_int16_t(buf, 34, vx_ub2);
+	_mav_put_int16_t(buf, 36, y_ub3);
+	_mav_put_int16_t(buf, 38, y_lb3);
+	_mav_put_int16_t(buf, 40, vy_ub3);
+	_mav_put_int16_t(buf, 42, x_ub3);
+	_mav_put_int16_t(buf, 44, x_lb3);
+	_mav_put_int16_t(buf, 46, vx_ub3);
+	_mav_put_int16_t(buf, 48, y_ub4);
+	_mav_put_int16_t(buf, 50, y_lb4);
+	_mav_put_int16_t(buf, 52, vy_ub4);
+	_mav_put_int16_t(buf, 54, x_ub4);
+	_mav_put_int16_t(buf, 56, x_lb4);
+	_mav_put_int16_t(buf, 58, vx_ub4);
+	_mav_put_uint8_t(buf, 60, smooth);
+	_mav_put_uint8_t(buf, 61, lookahead);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SHIM_PARAMS, buf, MAVLINK_MSG_ID_SHIM_PARAMS_LEN, MAVLINK_MSG_ID_SHIM_PARAMS_CRC);
@@ -503,6 +515,7 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 #endif
 #else
 	mavlink_shim_params_t *packet = (mavlink_shim_params_t *)msgbuf;
+	packet->d_ctrl = d_ctrl;
 	packet->roll_lb = roll_lb;
 	packet->abraking = abraking;
 	packet->mid_throttle = mid_throttle;
@@ -548,13 +561,23 @@ static inline void mavlink_msg_shim_params_send_buf(mavlink_message_t *msgbuf, m
 
 
 /**
+ * @brief Get field d_ctrl from shim_params message
+ *
+ * @return 1 to enable smoothing, 0 to disable
+ */
+static inline float mavlink_msg_shim_params_get_d_ctrl(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_float(msg,  0);
+}
+
+/**
  * @brief Get field smooth from shim_params message
  *
  * @return 1 to enable smoothing, 0 to disable
  */
 static inline uint8_t mavlink_msg_shim_params_get_smooth(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  56);
+	return _MAV_RETURN_uint8_t(msg,  60);
 }
 
 /**
@@ -564,7 +587,7 @@ static inline uint8_t mavlink_msg_shim_params_get_smooth(const mavlink_message_t
  */
 static inline uint8_t mavlink_msg_shim_params_get_lookahead(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  57);
+	return _MAV_RETURN_uint8_t(msg,  61);
 }
 
 /**
@@ -574,7 +597,7 @@ static inline uint8_t mavlink_msg_shim_params_get_lookahead(const mavlink_messag
  */
 static inline float mavlink_msg_shim_params_get_roll_lb(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  0);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
@@ -584,7 +607,7 @@ static inline float mavlink_msg_shim_params_get_roll_lb(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_abraking(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  4);
+	return _MAV_RETURN_int16_t(msg,  8);
 }
 
 /**
@@ -594,7 +617,7 @@ static inline int16_t mavlink_msg_shim_params_get_abraking(const mavlink_message
  */
 static inline uint16_t mavlink_msg_shim_params_get_mid_throttle(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint16_t(msg,  6);
+	return _MAV_RETURN_uint16_t(msg,  10);
 }
 
 /**
@@ -604,7 +627,7 @@ static inline uint16_t mavlink_msg_shim_params_get_mid_throttle(const mavlink_me
  */
 static inline int16_t mavlink_msg_shim_params_get_y_ub1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  8);
+	return _MAV_RETURN_int16_t(msg,  12);
 }
 
 /**
@@ -614,7 +637,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_ub1(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_y_lb1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  10);
+	return _MAV_RETURN_int16_t(msg,  14);
 }
 
 /**
@@ -624,7 +647,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_lb1(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vy_ub1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  12);
+	return _MAV_RETURN_int16_t(msg,  16);
 }
 
 /**
@@ -634,7 +657,7 @@ static inline int16_t mavlink_msg_shim_params_get_vy_ub1(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_x_ub1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  14);
+	return _MAV_RETURN_int16_t(msg,  18);
 }
 
 /**
@@ -644,7 +667,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_ub1(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_x_lb1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  16);
+	return _MAV_RETURN_int16_t(msg,  20);
 }
 
 /**
@@ -654,7 +677,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_lb1(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vx_ub1(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  18);
+	return _MAV_RETURN_int16_t(msg,  22);
 }
 
 /**
@@ -664,7 +687,7 @@ static inline int16_t mavlink_msg_shim_params_get_vx_ub1(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_y_ub2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  20);
+	return _MAV_RETURN_int16_t(msg,  24);
 }
 
 /**
@@ -674,7 +697,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_ub2(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_y_lb2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  22);
+	return _MAV_RETURN_int16_t(msg,  26);
 }
 
 /**
@@ -684,7 +707,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_lb2(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vy_ub2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  24);
+	return _MAV_RETURN_int16_t(msg,  28);
 }
 
 /**
@@ -694,7 +717,7 @@ static inline int16_t mavlink_msg_shim_params_get_vy_ub2(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_x_ub2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  26);
+	return _MAV_RETURN_int16_t(msg,  30);
 }
 
 /**
@@ -704,7 +727,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_ub2(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_x_lb2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  28);
+	return _MAV_RETURN_int16_t(msg,  32);
 }
 
 /**
@@ -714,7 +737,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_lb2(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vx_ub2(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  30);
+	return _MAV_RETURN_int16_t(msg,  34);
 }
 
 /**
@@ -724,7 +747,7 @@ static inline int16_t mavlink_msg_shim_params_get_vx_ub2(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_y_ub3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  32);
+	return _MAV_RETURN_int16_t(msg,  36);
 }
 
 /**
@@ -734,7 +757,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_ub3(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_y_lb3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  34);
+	return _MAV_RETURN_int16_t(msg,  38);
 }
 
 /**
@@ -744,7 +767,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_lb3(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vy_ub3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  36);
+	return _MAV_RETURN_int16_t(msg,  40);
 }
 
 /**
@@ -754,7 +777,7 @@ static inline int16_t mavlink_msg_shim_params_get_vy_ub3(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_x_ub3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  38);
+	return _MAV_RETURN_int16_t(msg,  42);
 }
 
 /**
@@ -764,7 +787,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_ub3(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_x_lb3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  40);
+	return _MAV_RETURN_int16_t(msg,  44);
 }
 
 /**
@@ -774,7 +797,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_lb3(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vx_ub3(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  42);
+	return _MAV_RETURN_int16_t(msg,  46);
 }
 
 /**
@@ -784,7 +807,7 @@ static inline int16_t mavlink_msg_shim_params_get_vx_ub3(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_y_ub4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  44);
+	return _MAV_RETURN_int16_t(msg,  48);
 }
 
 /**
@@ -794,7 +817,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_ub4(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_y_lb4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  46);
+	return _MAV_RETURN_int16_t(msg,  50);
 }
 
 /**
@@ -804,7 +827,7 @@ static inline int16_t mavlink_msg_shim_params_get_y_lb4(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vy_ub4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  48);
+	return _MAV_RETURN_int16_t(msg,  52);
 }
 
 /**
@@ -814,7 +837,7 @@ static inline int16_t mavlink_msg_shim_params_get_vy_ub4(const mavlink_message_t
  */
 static inline int16_t mavlink_msg_shim_params_get_x_ub4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  50);
+	return _MAV_RETURN_int16_t(msg,  54);
 }
 
 /**
@@ -824,7 +847,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_ub4(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_x_lb4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  52);
+	return _MAV_RETURN_int16_t(msg,  56);
 }
 
 /**
@@ -834,7 +857,7 @@ static inline int16_t mavlink_msg_shim_params_get_x_lb4(const mavlink_message_t*
  */
 static inline int16_t mavlink_msg_shim_params_get_vx_ub4(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  54);
+	return _MAV_RETURN_int16_t(msg,  58);
 }
 
 /**
@@ -846,6 +869,7 @@ static inline int16_t mavlink_msg_shim_params_get_vx_ub4(const mavlink_message_t
 static inline void mavlink_msg_shim_params_decode(const mavlink_message_t* msg, mavlink_shim_params_t* shim_params)
 {
 #if MAVLINK_NEED_BYTE_SWAP
+	shim_params->d_ctrl = mavlink_msg_shim_params_get_d_ctrl(msg);
 	shim_params->roll_lb = mavlink_msg_shim_params_get_roll_lb(msg);
 	shim_params->abraking = mavlink_msg_shim_params_get_abraking(msg);
 	shim_params->mid_throttle = mavlink_msg_shim_params_get_mid_throttle(msg);

@@ -168,7 +168,7 @@ public slots:
     // Overides from UAS virtual interface
     virtual void enableShim();
     virtual void disableShim();
-    virtual void setShimParams(bool smooth, uint8_t lookahead, float roll_lb,
+    virtual void setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float roll_lb,
 			       uint16_t abraking, uint16_t mid_throttle,
 			       
 			       uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,
