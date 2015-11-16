@@ -274,8 +274,8 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << smooth;
   uint8_t lookahead = params["lookahead"].toInt();
   QLOG_DEBUG() << lookahead;
-  float roll_lb = params["roll_lb"].toDouble();
-  QLOG_DEBUG() << roll_lb;
+  float angle_lb = params["angle_lb"].toDouble();
+  QLOG_DEBUG() << angle_lb;
   int16_t abraking = params["abraking"].toInt();
   QLOG_DEBUG() << abraking;
   uint16_t mid_throttle = params["mid_throttle"].toInt();
@@ -294,6 +294,12 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << x_lb1;
   int16_t vx_ub1 = box1["vx_ub"].toInt();
   QLOG_DEBUG() << vx_ub1;
+  int16_t z_ub1 = box1["z_ub"].toInt();
+  QLOG_DEBUG() << z_ub1;
+  int16_t z_lb1 = box1["z_lb"].toInt();
+  QLOG_DEBUG() << z_lb1;
+  int16_t vz_ub1 = box1["vz_ub"].toInt();
+  QLOG_DEBUG() << vz_ub1;
   
   QJsonObject box2 = params["box2"].toObject();
   int16_t y_ub2 = box2["y_ub"].toInt();
@@ -308,6 +314,12 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << x_lb2;
   int16_t vx_ub2 = box2["vx_ub"].toInt();
   QLOG_DEBUG() << vx_ub2;
+  int16_t z_ub2 = box2["z_ub"].toInt();
+  QLOG_DEBUG() << z_ub2;
+  int16_t z_lb2 = box2["z_lb"].toInt();
+  QLOG_DEBUG() << z_lb2;
+  int16_t vz_ub2 = box2["vz_ub"].toInt();
+  QLOG_DEBUG() << vz_ub2;
   
   QJsonObject box3 = params["box3"].toObject();
   int16_t y_ub3 = box3["y_ub"].toInt();
@@ -322,6 +334,12 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << x_lb3;
   int16_t vx_ub3 = box3["vx_ub"].toInt();
   QLOG_DEBUG() << vx_ub3;
+  int16_t z_ub3 = box3["z_ub"].toInt();
+  QLOG_DEBUG() << z_ub3;
+  int16_t z_lb3 = box3["z_lb"].toInt();
+  QLOG_DEBUG() << z_lb3;
+  int16_t vz_ub3 = box3["vz_ub"].toInt();
+  QLOG_DEBUG() << vz_ub3;
   
   QJsonObject box4 = params["box4"].toObject();
   int16_t y_ub4 = box4["y_ub"].toInt();
@@ -336,14 +354,20 @@ void UASControlWidget::updateShimParams()
   QLOG_DEBUG() << x_lb4;
   int16_t vx_ub4 = box4["vx_ub"].toInt();
   QLOG_DEBUG() << vx_ub4;
-       
+  int16_t z_ub4 = box4["z_ub"].toInt();
+  QLOG_DEBUG() << z_ub4;
+  int16_t z_lb4 = box4["z_lb"].toInt();
+  QLOG_DEBUG() << z_lb4;
+  int16_t vz_ub4 = box4["vz_ub"].toInt();
+  QLOG_DEBUG() << vz_ub4;
+  
   UAS* mav = dynamic_cast<UAS*>(UASManager::instance()->getUASForId(this->m_uas));
   if (mav)
     {
       mav->setShimParams(d_ctrl,
 			 smooth,
 			 lookahead,
-			 roll_lb,
+			 angle_lb,
 			 abraking,
 			 mid_throttle,
 			 
@@ -353,6 +377,9 @@ void UASControlWidget::updateShimParams()
 			 x_ub1,
 			 x_lb1,
 			 vx_ub1,
+			 z_ub1,
+			 z_lb1,
+			 vz_ub1,
 
 			 y_ub2,
 			 y_lb2,
@@ -360,20 +387,30 @@ void UASControlWidget::updateShimParams()
 			 x_ub2,
 			 x_lb2,
 			 vx_ub2,
-			 
+			 z_ub2,
+			 z_lb2,
+			 vz_ub2,
+
 			 y_ub3,
-			  y_lb3,
+			 y_lb3,
 			 vy_ub3,
 			 x_ub3,
 			 x_lb3,
 			 vx_ub3,
-			 
+			 z_ub3,
+			 z_lb3,
+			 vz_ub3,
+
 			 y_ub4,
 			 y_lb4,
 			 vy_ub4,
 			 x_ub4,
 			 x_lb4,
-			 vx_ub4);
+			 vx_ub4,
+			 z_ub4,
+			 z_lb4,
+			 vz_ub4);
+
 
 //        mav->setShimParams(
 //         ui.smoothIn->isChecked(),

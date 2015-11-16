@@ -168,20 +168,24 @@ public slots:
     // Overides from UAS virtual interface
     virtual void enableShim();
     virtual void disableShim();
-    virtual void setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float roll_lb,
+    virtual void setShimParams(float d_ctrl, bool smooth, uint8_t lookahead, float angle_lb,
 			       uint16_t abraking, uint16_t mid_throttle,
-			       
+
 			       uint16_t y_ub1, uint16_t y_lb1, uint16_t vy_ub1,
 			       uint16_t x_ub1, uint16_t x_lb1, uint16_t vx_ub1,
+			       uint16_t z_ub1, uint16_t z_lb1, uint16_t vz_ub1,
 			       
 			       uint16_t y_ub2, uint16_t y_lb2, uint16_t vy_ub2,
 			       uint16_t x_ub2, uint16_t x_lb2, uint16_t vx_ub2,
-			       
+			       uint16_t z_ub2, uint16_t z_lb2, uint16_t vz_ub2,
+
 			       uint16_t y_ub3, uint16_t y_lb3, uint16_t vy_ub3,
 			       uint16_t x_ub3, uint16_t x_lb3, uint16_t vx_ub3,
+			       uint16_t z_ub3, uint16_t z_lb3, uint16_t vz_ub3,
 			       
 			       uint16_t y_ub4, uint16_t y_lb4, uint16_t vy_ub4,
-			       uint16_t x_ub4, uint16_t x_lb4, uint16_t vx_ub4);
+			       uint16_t x_ub4, uint16_t x_lb4, uint16_t vx_ub4,
+			       uint16_t z_ub4, uint16_t z_lb4, uint16_t vz_ub4);
 
     // Overides from UAS virtual interface
     virtual void armSystem();
